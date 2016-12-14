@@ -46,7 +46,7 @@ import formValidation from "DEGJS/formValidation";
 import pattern from "DEGJS/formValidation-pattern";
 import required from "DEGJS/formValidation-required";
 
-/* Configure the rule array alongside other validation options */
+/* Configure the rules array alongside other validation options */
 let	validationOptions = {
     rules: [
         pattern,
