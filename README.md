@@ -2,7 +2,7 @@
 A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
 
 ## Wait...ANOTHER validation plugin?
-You're right; there's no shortage of form validation plugins to choose from. That said, this plugin was written to to fulfill some specific needs and workflows that many other validation plugins lack, including:
+You're right; there's no shortage of form validation plugins to choose from. That said, this plugin was written to fulfill some specific needs and workflows that many other validation plugins lack, including:
 
 * No third-party dependencies (especially jQuery)
 * Written as an ES6 module, and compatible with the [JSPM package manager](http://jspm.io).
