@@ -3,7 +3,8 @@
     "version": "0.0.1",
     "description": "A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.",
     "keywords": [
-        "DEGJS"
+        "DEGJS",
+        "formValidation"
     ],
     "author": {
         "name": "Aaron Ladage",
@@ -19,9 +20,9 @@
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/DEGJS/moduleName.git"
+        "url": "https://github.com/DEGJS/formValidation.git"
     },
-    "bugs": "https://github.com/DEGJS/moduleName/issues",
+    "bugs": "https://github.com/DEGJS/formValidation/issues",
     "jspm": {
         "registry": "jspm",
         "format": "es6",

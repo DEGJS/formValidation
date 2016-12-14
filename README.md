@@ -169,11 +169,11 @@ When an error occurs, formValidation follows a hierarchy to determine which erro
 
 ## Rules
 Several prebuilt rule modules are available via [DEGJS](http://degjs.com), including:
-* Required
-* Required Radio Group
-* Email
-* Pattern
-* Length
+* [Required](https://github.com/DEGJS/formValidation-required)
+* [Required Radio Group](https://github.com/DEGJS/formValidation-requiredRadioGroup)
+* [Email](https://github.com/DEGJS/formValidation-email)
+* [Pattern](https://github.com/DEGJS/formValidation-pattern)
+* [Length](https://github.com/DEGJS/formValidation-length)
 
 ## Writing Your Own Rule
 By following formValidation's rule API, it's also possible to write your own rule module that's asynchronous, Promise-based and can fire on most common [DOM events](https://developer.mozilla.org/en-US/docs/Web/Events) (including form submission, which uses `Promise.all` to validate all of a validation instance's rules at once).
