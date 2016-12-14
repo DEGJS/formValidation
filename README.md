@@ -59,6 +59,14 @@ let formElement = document.querySelector('.form');
 let validationInst = formValidation(formElement, validationOptions);
 ```
 
+Sample Markup:
+```html
+<div class="js-field">
+	<label for="zip">ZIP Code</label>
+	<input class="js-field-input" type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
+</div>
+```
+
 ## Options
 
 #### options.rules
