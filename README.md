@@ -61,10 +61,15 @@ let validationInst = formValidation(formElement, validationOptions);
 
 Sample Markup:
 ```html
-<div class="js-field">
-	<label for="zip">ZIP Code</label>
-	<input class="js-field-input" type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
-</div>
+<form class="form">
+	<fieldset>
+		<div class="js-field">
+			<label for="zip">ZIP Code</label>
+			<input class="js-field-input" type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
+		</div>
+		<button type="submit">Submit</button>
+	</fieldset>
+</form>
 ```
 
 ## Options
@@ -189,22 +194,22 @@ By following formValidation's rule API, it's also possible to write your own rul
 ### Anatomy of a Rule
 A rule module should return the following methods:
 
-**.events()**
-Parameters: `none`
-Required: `yes`
-Returns: `Array`
+**.events()**  
+Parameters: `none`  
+Required: `yes`  
+Returns: `Array`  
 Returns an array of event names on which the rule should fire for relevant fields.
 
-**.isRelevant(containerEl, inputEls, stateId, callback)**
+**.isRelevant(containerEl, inputEls, stateId, callback)**  
 Parameters: 
-Required: `yes`
-Returns: `Boolean`
+Required: `yes`  
+Returns: `Boolean`  
 Returns a boolean value indicating if the rule is relevant to an indivdual field.
 
-**.validate(matchingField, event)**
-Parameters: 
-Required: `yes`
-Returns: `Promise`
+**.validate(matchingField, event)**  
+Parameters:  
+Required: `yes`  
+Returns: `Promise`  
 Rules that pass validation should resolve 
 
 Rules that fail validation should also resolve the promise, but return an object:
