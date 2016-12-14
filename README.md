@@ -70,101 +70,101 @@ Sample Markup:
 ## Options
 
 #### options.rules
-Type: `Array` Default: `null`
+Type: `Array` Default: `null`  
 An array of rule module names that should be registered with the validation instance. Each rule in the array must be imported.
 
 #### options.disableHTML5Validation
-Type: `Boolean` Default: `true`
+Type: `Boolean` Default: `true`  
 Disables native HTML5 validation.
 
 #### options.disableFormSubmit
-Type: `Boolean` Default: `false`
+Type: `Boolean` Default: `false`  
 Disables form submission when the form passes validation.
 
 #### options.disableFieldEventsOnFormSubmit
-Type: `Boolean` Default: `false`
+Type: `Boolean` Default: `false`  
 By default, field validation events will also fire when the form attempts to validate. In certain situations (i.e., when listening for field and form submission events simulatenously), this could be problematic and can be disabled.
 
 #### options.scrollToErrorOnFormSubmit
-Type: `Boolean` Default: `true`
+Type: `Boolean` Default: `true`  
 Scrolls the page to the first field containing an error when form validation fails. This may be useful on long forms. This option uses the scrollTo module. More information on this dependency can be found [here](https://github.com/DEGJS/scrollTo).
 
 #### options.scrollToSpeed
-Type: `Integer` Default: `500`
+Type: `Integer` Default: `500`  
 Sets the scroll speed of the `scrollToErrorOnFormSubmit` option.
 
 #### options.scrollToEasing
-Type: `String` Default: `easeIn`
+Type: `String` Default: `easeIn`  
 Sets the easing effect of the `scrollToErrorOnFormSubmit` option.
 
 #### options.generatedIdPrefix
-Type: `String` Default: `js-field--`
+Type: `String` Default: `js-field--`  
 formValidation automatically adds randomly generated IDs to fields that don't already have IDs (i.e., `<div class="js-field" id="js-field--9695013748541">`). This option changes the string that preceds the randomly generated number.
 
 #### options.fieldSelector
-Type: `String` Default: `.js-field`
+Type: `String` Default: `.js-field`  
 The CSS selector for each field element.
 
 #### options.fieldInputSelector
-Type: `String` Default: `.js-field-input`
+Type: `String` Default: `.js-field-input`  
 The CSS selector for each field's input element.
 
 #### options.fieldErrorWrapperSelector
-Type: `String` Default: `.js-field-error`
+Type: `String` Default: `.js-field-error`  
 An error wrapper element is automatically added to fields that don't contain one. This option allows you to define a CSS selector, which may be useful when error wrapper elements are already present within the field.
 
 #### options.fieldErrorWrapperClass
-Type: `String` Default: `field__error-message`
+Type: `String` Default: `field__error-message`  
 The CSS class added to all error wrapper elements.
 
 #### options.fieldHasErrorClass
-Type: `String` Default: `has-error`
+Type: `String` Default: `has-error`  
 The CSS class added to fields when an error is present.
 
 #### options.inputParentFieldIdAttr
-Type: `String` Default: `data-parent-field-id`
+Type: `String` Default: `data-parent-field-id`  
 The data attribute name added to inputs, which corresponds with the ID of its parent field.
 
 #### options.onFormValidationStartEvent
-Type: `String` Default: `onFormValidationStart`
+Type: `String` Default: `onFormValidationStart`  
 The name of the event fired by EventAggregator when form validation begins.
 
 #### options.onFormValidationSuccessEvent
-Type: `String` Default: `onFormValidationSuccess`
+Type: `String` Default: `onFormValidationSuccess`  
 The name of the event fired by EventAggregator when form validation passes.
 
 #### options.onFormValidationErrorEvent
-Type: `String` Default: `onFormValidationError`
+Type: `String` Default: `onFormValidationError`  
 The name of the event fired by EventAggregator when form validation fails.
 
 #### options.onFieldValidationStartEvent
-Type: `String` Default: `onFieldValidationStart`
+Type: `String` Default: `onFieldValidationStart`  
 The name of the event fired by EventAggregator when a field's validation begins.
 
 #### options.onFieldValidationSuccessEvent
-Type: `String` Default: `onFieldValidationSuccess`
+Type: `String` Default: `onFieldValidationSuccess`  
 The name of the event fired by EventAggregator when a field's validation passes.
 
 #### options.onFieldValidationErrorEvent
-Type: `String` Default: `onFieldValidationError`
+Type: `String` Default: `onFieldValidationError`  
 The name of the event fired by EventAggregator when a field's validation fails.
 
 ## Methods
 
 ### .addFields(els)
-Parameters: `els` 
+Parameters: `els`  
 An element or array of elements to add to the validation instance.
 
 ### .removeFields(els)
-Parameters: `els` 
+Parameters: `els`  
 An element or array of elements to remove from the validation instance.
 
 ### .enableFormSubmit()
-Parameters: `none` 
+Parameters: `none`  
 Enables a form's submission upon validation success.
 
 ### .disableFormSubmit()
-Parameters: `none` 
+Parameters: `none`  
 Disables a form's submission upon validation success.
 
 ## Configuring Error Messages
