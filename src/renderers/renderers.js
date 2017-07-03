@@ -1,41 +1,44 @@
-function renderErrorEl(matchingField, errorSelector, errorClass) {
-	let errorEl = matchingField.querySelector('.' + errorClass);
-	if (errorEl === null) {
-		matchingField.insertAdjacentHTML('beforeend', `
-			<span class="${errorClass}"></span>
+const renderErrorsEl = (field, settings) => {
+	let errorsEl = field.querySelector('.' + settings.errorsClass);
+	if (!errorsEl) {
+		field.insertAdjacentHTML('beforeend', `
+			<div class="${settings.errorsClass}"></div>
 		`);
-		errorEl = matchingField.querySelector('.' + errorClass);
+		errorsEl = field.querySelector('.' + settings.errorsClass);
 	} else {
-		errorEl.classList.add(errorClass);
+		errorsEl.classList.add(settings.errorsClass);
 	}
-	return errorEl;
-};
+	return errorsEl;
+}
 
-function renderValidationMessage(formEl, matchingField, msgObj) {
-	let msgAttribute = msgObj.attribute,
-		messagesArr = [
-			matchingField.containerEl.getAttribute(msgAttribute),
-			formEl.getAttribute(msgAttribute),
-			msgObj.message,
-			'Validation error.'
-		],
-		correctError = getErrorMessage(messagesArr);
-		if (msgObj.renderCallback) {
-			correctError = msgObj.renderCallback(correctError, matchingField);
-		}
-	matchingField.errorEl.insertAdjacentHTML('beforeend', `
-		${correctError}
-		<br>
+const renderValidationMessage = (formEl, args, settings) => {
+	const msgAttribute = args.rule.messageAttr;
+	const field = args.field;
+	const messagesArr = [
+		field.containerEl.getAttribute(msgAttribute),
+		formEl.getAttribute(msgAttribute),
+		args.rule.message,
+		'Validation error.'
+	];
+	let correctError = getErrorMessage(messagesArr);
+
+	if (customMessageProcessorIsSet(args)) {
+		correctError = args.rule.processMessage(correctError, args);
+	}
+	field.errorsEl.insertAdjacentHTML('beforeend', `
+		<div class="${settings.errorClass}">${correctError}</div>
 	`);
-};
+}
 
-function getErrorMessage(messagesArr) {
-	return messagesArr.find(function(message) {
-		return ((message) && (message.length > 0));
-	});
-};
+const customMessageProcessorIsSet = (args) => {
+	return args && args.rule && args.rule.processMessage && typeof args.rule.processMessage === 'function';
+}
+
+const getErrorMessage = (messagesArr) => {
+	return messagesArr.find(message => message && message.length > 0);
+}
 
 export {
-	renderErrorEl,
+	renderErrorsEl,
 	renderValidationMessage
 };

@@ -33,8 +33,7 @@
         "dependencies": {
             "DEGJS/domUtils": "github:DEGJS/domUtils@^2.0.0",
             "DEGJS/objectUtils": "github:DEGJS/objectUtils@^2.0.0",
-            "DEGJS/scrollTo": "github:DEGJS/scrollTo@^1.0.1",
-            "DEGJS/eventAggregator": "github:DEGJS/eventAggregator@^1.0.2"
+            "DEGJS/scrollTo": "github:DEGJS/scrollTo@^1.0.1"
         }
     }
 }
