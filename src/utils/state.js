@@ -17,6 +17,14 @@ const state = () => {
 		}
 	}
 
+	const addFieldVals = (stateObj, addObj) => {
+		if (stateItemExists(stateObj)) {
+			for (let key in addObj) {
+				stateObj[key] = addObj[key];
+			}
+		}
+	}
+
 	const removeField = (id) => {
 		state = state.filter(field => field.id !== id);
 	}
@@ -34,6 +42,7 @@ const state = () => {
 		getField: getField,
 		addField: addField,
 		removeField: removeField,
+		addFieldVals: addFieldVals,
 		reset: reset
 	};
 

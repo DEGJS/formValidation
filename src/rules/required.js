@@ -8,17 +8,21 @@ const required = (options) => {
 			'submit'
 		]
 	};
-	const settings = Object.assign({}, defaults, options);
+	let settings = Object.assign({}, defaults, options);
 
-	const isRelevant = (containerEl, inputEls) => {
-		return inputEls.every(el => el.getAttribute('required') !== null);
+	const getSettings = () => {
+		return settings;
+	}
+
+	const isRelevant = (field) => {
+		return field.inputEls.some(el => el.getAttribute('required') !== null);
 	}
 
 	const validate = (field) => {
 		return new Promise(function(resolve, reject) {
 			if (field.inputEls) {
 				resolve({
-					valid: field.inputEls.every(el => el.value.length > 0)
+					valid: field.inputEls.some(el => el.value.length > 0)
 				});
 			} else {
 				reject('required: No inputs set.');
@@ -26,12 +30,16 @@ const required = (options) => {
 		});
 	}
 
-	// const processMessage = (msg, response) => {
-	// 	return msg.replace('required', 'needed');
+	// const processMessage = (msg) => {
+	// 	if (settings.processMessage && typeof settings.processMessage === 'function') {
+	// 		return settings.processMessage(msg);
+	// 	} else {
+	// 		return msg.replace('required', 'needed');
+	// 	}
 	// }
 
 	return {
-		settings: settings,
+		settings: getSettings(),
 		isRelevant: isRelevant,
 		validate: validate
 		// processMessage: processMessage

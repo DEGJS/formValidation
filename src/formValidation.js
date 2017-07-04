@@ -5,7 +5,7 @@ import { ensureArray } from "DEGJS/objectUtils";
 // Utils
 import state from "./utils/state";
 import { getUniqueId, generateId } from "./utils/idUtils";
-import { checkFormIntegrity, disableBrowserValidation } from "./utils/formUtils";
+import { checkFormIntegrity, checkFieldIntegrity, checkRuleIntegrity, disableBrowserValidation } from "./utils/formUtils";
 import { logError, scrollToError } from "./utils/errorUtils";
 
 // Renderers
@@ -14,12 +14,6 @@ import { renderErrorsEl, renderValidationMessage } from "./renderers/renderers";
 const formValidation = (formEl, options = {}) => {
 
 	const stateInst = state();
-	const errors = {
-		invalidFormEl: 'Form element not defined.',
-		noRules: 'No rules set.',
-		noInputEls: 'No input elements (input, select or textarea) found within field element.',
-		noEvents: 'No events set for element.'
-	};
 	const defaults = {
 		rules: [],
 		scrollToErrorOnSubmit: true,
@@ -29,6 +23,7 @@ const formValidation = (formEl, options = {}) => {
 		generatedIdPrefix: 'js-validation-field--',
 		fieldSelector: '.js-validation-field',
 		inputsSelector: 'input, select, textarea',
+		defaultErrorsClass: 'validation-field__errors--default',
 		errorsClass: 'validation-field__errors',
 		errorClass: 'validation-field__error',
 		hasErrorsClass: 'has-errors',
@@ -45,75 +40,58 @@ const formValidation = (formEl, options = {}) => {
 	let settings = Object.assign({}, defaults, options);
 
 	const init = () => {
-		checkFormIntegrity(formEl, errors, settings)
-			.then(response => {
-				disableBrowserValidation(formEl);
-				registerFields(response.fieldEls);
-			})
-			.catch(error => {
-				logError(error);
-			});
+		checkFormIntegrity(formEl, settings);
+		disableBrowserValidation(formEl);
+		const fieldEls = Array.from(formEl.querySelectorAll(settings.fieldSelector));
+		registerFields(fieldEls);
 	}
 
 	const registerFields = (fieldEls) => {
-		fieldEls = ensureArray(fieldEls);
+		ensureArray(fieldEls);
 		fieldEls.forEach(fieldEl => {
 			const inputEls = Array.from(fieldEl.querySelectorAll(settings.inputsSelector));
-			if (inputEls.length > 0) {
-				const id = getUniqueId(fieldEl, settings);
-				inputEls.forEach(inputEl => inputEl.setAttribute(settings.inputParentFieldIdAttr, id));
-				stateInst.addField({
-					id: id,
-					containerEl: fieldEl,
-					errorsEl: renderErrorsEl(fieldEl, settings),
-					inputEls: inputEls,
-					rules: registerRules(fieldEl, inputEls, id)
-				});
-			} else {
-				logError(errors.noInputEls, fieldEl);
-			}
+			const id = getUniqueId(fieldEl, settings);
+			checkFieldIntegrity(fieldEl, inputEls);
+			inputEls.forEach(inputEl => inputEl.setAttribute(settings.inputParentFieldIdAttr, id));
+			stateInst.addField({
+				id: id,
+				formEl: formEl,
+				fieldEl: fieldEl,
+				inputEls: inputEls,
+				errorsEl: renderErrorsEl(fieldEl, settings)
+			});
+			stateInst.addFieldVals(stateInst.getField(id), {
+				rules: registerRules(stateInst.getField(id))
+			})
 		});
 	}
 
-	const registerRules = (containerEl, inputEls, id) => {
+	const registerRules = (field) => {
 		return settings.rules.map(rule => {
 			const ruleInst = typeof rule === 'function' ? rule() : rule;
-			if (ruleInst.isRelevant(containerEl, inputEls)) {
+			checkRuleIntegrity(ruleInst, rule.name);
+			if (ruleInst.isRelevant(field)) {
 				registerEvents(ruleInst);
-				return {
-					name: rule.name,
-					events: ruleInst.settings.events,
-					messageAttr: ruleInst.settings.messageAttr,
-					message: ruleInst.settings.message,
-					validate: ruleInst.validate,
-					processMessage: ruleInst.processMessage
-				};
+				return ruleInst;
 			}
 		});
 	}
 
 	const registerEvents = (rule) => {
-		const ruleSettings = rule.settings;
-		if (ruleSettings && ruleSettings.events && ruleSettings.events.length > 0) {
-			ruleSettings.events.forEach(eventName => {
-				if (events.indexOf(eventName) === -1) {
-					events.push(eventName);
-					formEl.addEventListener(eventName, onEvent);
-				}
-			});
-		} else {
-			logError(errors.noEvents);
-		}
+		rule.settings.events.forEach(eventName => {
+			if (events.indexOf(eventName) === -1) {
+				events.push(eventName);
+				formEl.addEventListener(eventName, onEvent);
+			}
+		});
 	}
 
 	const onEvent = (event) => {
 		if (stateInst.get().length > 0) {
-			event.preventDefault();
 			const el = event.target;
-
 			if (el === formEl) {
 				processCallback(settings.onFormValidationStart, {
-					target: formEl,
+					fields: stateInst.get(),
 					event: event
 				});
 				event.preventDefault();
@@ -125,22 +103,22 @@ const formValidation = (formEl, options = {}) => {
 					.then(testResults => {
 						if (testResults.every(result => result.valid === true)) {
 							processCallback(settings.onFormValidationSuccess, {
-								target: formEl,
+								fields: stateInst.get(),
 								event: event
 							}, submitForm);
 						} else {
 							if (settings.scrollToErrorOnSubmit) {
-								const errorEl = responses[0].field.errorEl;
+								const errorEl = testResults[0].field.errorEl;
 								scrollToError(errorEl, settings.scrollToSpeed, settings.scrollToEasing);
 							}
 							processCallback(settings.onFormValidationError, {
-								target: formEl,
+								fields: stateInst.get(),
 								event: event
 							});
 						}
 					}).catch(error => {
 						processCallback(settings.onFormValidationError, {
-							target: formEl,
+							fields: stateInst.get(),
 							event: event
 						});
 					});
@@ -155,11 +133,11 @@ const formValidation = (formEl, options = {}) => {
 
 	const runFieldRules = (field, event, disableEvent = false) => {
 		processCallback(settings.onFieldValidationStart, {
-			target: field,
+			fields: ensureArray(field),
 			event: event
 		});
 		clearFieldErrors(field);
-		const matchingRules = field.rules.filter(rule => rule.events.indexOf(event.type) !== -1);
+		const matchingRules = field.rules.filter(rule => rule.settings.events.indexOf(event.type) !== -1);
 
 		return matchingRules.map(rule => runRule(field, rule, event, disableEvent));
 	}
@@ -184,8 +162,7 @@ const formValidation = (formEl, options = {}) => {
 	const onValidationSuccess = (args) => {
 		if (args.disableEvent !== true) {
 			processCallback(settings.onFieldValidationSuccess, {
-				target: args.field,
-				response: args.response,
+				fields: ensureArray(args.field),
 				event: args.event
 			});
 		}
@@ -194,18 +171,17 @@ const formValidation = (formEl, options = {}) => {
 	const onValidationError = (args) => {
 		if (args.disableEvent !== true) {
 			processCallback(settings.onFieldValidationError, {
-				target: args.field,
-				response: args.response,
+				fields: ensureArray(args.field),
 				event: args.event
 			}, () => {
-				args.field.containerEl.classList.add(settings.hasErrorClass);
-				renderValidationMessage(formEl, args, settings);
+				args.field.fieldEl.classList.add(settings.hasErrorClass);
+				renderValidationMessage(args, settings);
 			});
 		}
 	}
 
 	const clearFieldErrors = (field) => {
-		field.containerEl.classList.remove(settings.hasErrorsClass);
+		field.fieldEl.classList.remove(settings.hasErrorsClass);
 		emptyElements(field.errorsEl);
 	}
 
@@ -214,9 +190,12 @@ const formValidation = (formEl, options = {}) => {
 		elOrIdArr.forEach(elOrId => {
 			let id = elOrId;
 			if (isElement(elOrId)) {
-				const elErrorWrapper = elOrId.querySelector('.' + settings.fieldErrorWrapperClass);
+				const elErrorWrapper = elOrId.querySelector('.' + settings.errorsClass);
 				if (elErrorWrapper) {
-					elErrorWrapper.innerHTML = '';
+					emptyElements(elErrorWrapper);
+					if (elErrorWrapper.classList.contains(settings.defaultErrorsClass)) {
+						elErrorWrapper.parentNode.removeChild(elErrorWrapper);
+					}
 				}
 				id = elOrId.getAttribute('id');
 			}
@@ -226,7 +205,7 @@ const formValidation = (formEl, options = {}) => {
 
 	const processCallback = (callback, vals, elseFn = null) => {
 		if (callback !== null) {
-			callback(vals.event, vals.target);
+			callback(vals);
 		} else {
 			if (elseFn !== null) {
 				elseFn(vals.event);

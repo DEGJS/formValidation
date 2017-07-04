@@ -2,7 +2,7 @@ const renderErrorsEl = (field, settings) => {
 	let errorsEl = field.querySelector('.' + settings.errorsClass);
 	if (!errorsEl) {
 		field.insertAdjacentHTML('beforeend', `
-			<div class="${settings.errorsClass}"></div>
+			<div class="${settings.errorsClass} ${settings.defaultErrorsClass}"></div>
 		`);
 		errorsEl = field.querySelector('.' + settings.errorsClass);
 	} else {
@@ -11,19 +11,19 @@ const renderErrorsEl = (field, settings) => {
 	return errorsEl;
 }
 
-const renderValidationMessage = (formEl, args, settings) => {
-	const msgAttribute = args.rule.messageAttr;
+const renderValidationMessage = (args, settings) => {
+	const msgAttribute = args.rule.settings.messageAttr;
 	const field = args.field;
 	const messagesArr = [
-		field.containerEl.getAttribute(msgAttribute),
-		formEl.getAttribute(msgAttribute),
-		args.rule.message,
+		field.fieldEl.getAttribute(msgAttribute),
+		field.formEl.getAttribute(msgAttribute),
+		args.rule.settings.message,
 		'Validation error.'
 	];
 	let correctError = getErrorMessage(messagesArr);
 
 	if (customMessageProcessorIsSet(args)) {
-		correctError = args.rule.processMessage(correctError, args);
+		correctError = args.rule.processMessage(correctError);
 	}
 	field.errorsEl.insertAdjacentHTML('beforeend', `
 		<div class="${settings.errorClass}">${correctError}</div>
