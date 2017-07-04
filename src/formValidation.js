@@ -16,18 +16,18 @@ const formValidation = (formEl, options = {}) => {
 	const stateInst = state();
 	const defaults = {
 		rules: [],
-		scrollToErrorOnSubmit: true,
-		disableFieldEventsOnSubmit: false,
-		scrollToSpeed: 500,
-		scrollToEasing: 'easeIn',
-		generatedIdPrefix: 'js-validation-field--',
 		fieldSelector: '.js-validation-field',
 		inputsSelector: 'input, select, textarea',
-		defaultErrorsClass: 'validation-field__errors--default',
 		errorsClass: 'validation-field__errors',
 		errorClass: 'validation-field__error',
 		hasErrorsClass: 'has-errors',
+		generatedIdPrefix: 'js-validation-field--',
 		inputParentFieldIdAttr: 'data-validation-field-id',
+		scrollToErrorOnSubmit: true,
+		scrollToSpeed: 500,
+		scrollToEasing: 'easeIn',
+		defaultErrorMessage: 'Validation error.',
+		disableFieldEventsOnSubmit: false,
 		onFormValidationStart: null,
 		onFieldValidationStart: null,
 		onFormValidationSuccess: null,
@@ -40,6 +40,7 @@ const formValidation = (formEl, options = {}) => {
 	let settings = Object.assign({}, defaults, options);
 
 	const init = () => {
+		settings.defaultErrorsClass = 'validation-field__errors--default';
 		checkFormIntegrity(formEl, settings);
 		disableBrowserValidation(formEl);
 		const fieldEls = Array.from(formEl.querySelectorAll(settings.fieldSelector));

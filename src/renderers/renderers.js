@@ -18,7 +18,7 @@ const renderValidationMessage = (args, settings) => {
 		field.fieldEl.getAttribute(msgAttribute),
 		field.formEl.getAttribute(msgAttribute),
 		args.rule.settings.message,
-		'Validation error.'
+		settings.defaultErrorMessage
 	];
 	let correctError = getErrorMessage(messagesArr);
 

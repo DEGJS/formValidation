@@ -31,10 +31,19 @@ const email = (options) => {
 		});
 	}
 
+	const postprocessMessage = (msg) => {
+		if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
+			return settings.postprocessMessage(msg);
+		} else {
+			return msg;
+		}
+	}
+
 	return {
 		settings: getSettings(),
 		isRelevant: isRelevant,
-		validate: validate
+		validate: validate,
+		postprocessMessage: postprocessMessage
 	};
 
 }

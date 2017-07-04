@@ -30,19 +30,19 @@ const required = (options) => {
 		});
 	}
 
-	// const processMessage = (msg) => {
-	// 	if (settings.processMessage && typeof settings.processMessage === 'function') {
-	// 		return settings.processMessage(msg);
-	// 	} else {
-	// 		return msg.replace('required', 'needed');
-	// 	}
-	// }
+	const postprocessMessage = (msg) => {
+		if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
+			return settings.postprocessMessage(msg);
+		} else {
+			return msg;
+		}
+	}
 
 	return {
 		settings: getSettings(),
 		isRelevant: isRelevant,
-		validate: validate
-		// processMessage: processMessage
+		validate: validate,
+		postprocessMessage: postprocessMessage
 	};
 
 }
