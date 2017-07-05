@@ -176,100 +176,106 @@ Several prebuilt rule modules are available via [DEGJS](http://degjs.com), inclu
 * [Length](https://github.com/DEGJS/formValidation-length)
 
 ## Writing Your Own Rule
-By following formValidation's rule API, it's also possible to write your own rule module that's asynchronous, Promise-based and can fire on most common [DOM events](https://developer.mozilla.org/en-US/docs/Web/Events) (including form submission, which uses `Promise.all` to validate all of a validation instance's rules at once).
+By following formValidation's rule API, you can also write your own rule module that's asynchronous, Promise-based and can fire on most common [DOM events](https://developer.mozilla.org/en-US/docs/Web/Events) (including form submission, which uses `Promise.all` to validate all of a validation instance's rules at once).
 
 ### Anatomy of a Rule
-A rule module should return the following methods:
+A rule module must return the following methods:
 
-**.events()**  
+**.settings()**  
 Parameters: `none`  
 Required: `yes`  
-Returns: `Array`  
-Returns an array of event names on which the rule should fire for relevant fields.
+Returns: `Object`  
+Must return an object containing the following properties:
+* *message (optional):* the default message the rule will display
+* *messageAttr (required):* the attribute that will be checked on the field and form elements for message overrides
+* *events (required):* an array of DOM event names on which the rule should fire
 
-**.isRelevant(containerEl, inputEls, stateId, callback)**  
-Parameters: 
+**.isRelevant(field)**  
+Parameters: `field`
 Required: `yes`  
 Returns: `Boolean`  
-Returns a boolean value indicating if the rule is relevant to an indivdual field.
+Must return a boolean value indicating if the rule is relevant to an individual field.
 
-**.validate(matchingField, event)**  
-Parameters:  
+**.validate(matchingField)**  
+Parameters: `field` 
 Required: `yes`  
 Returns: `Promise`  
-Rules that pass validation should resolve 
+Perhaps counterintuitively, the validate method should return a resolve() method, regardless of whether validation passes or fails.
 
-Rules that fail validation should also resolve the promise, but return an object:
+Rules that pass validation should return a `valid: true` property within the resolve method's returned object:
 
 ```js
 resolve({
-    valid: false,
-    message: {
-        attribute: 'data-attribute-name',
-        message: 'This is the error message'
-    },
-    matchingField: matchingField
+    valid: true
 });
 ```
 
-The validate method should only reject the promise when there is a problem with the rule (i.e., when the matching field passed to it doesn't contain any input elements).
+Rules that fail validation should also resolve the promise, but return a `valid: false` property within the returned object:
+
+```js
+resolve({
+    valid: false
+});
+```
+
+The validate method should only reject the promise when there is a problem with the rule (i.e., when the field passed to it doesn't contain any input elements).
+
+**.postprocessMessage(msg)**
+Parameters: `msg`
+Required: `no`  
+Returns: `String`  
+Must return the message it's passed, optionally reformatted if needed. This method should also check for a `settings.postprocessMessage` function, which allows it to be overriden during rule instantiation.
 
 ### Sample rule
 ```js
-let required = function() {
-	let messages = {
-			requiredMsg: {
-				attribute: 'data-validation-required-message',
-				message: 'This field is required.'
-			}
-		},
-		events = [
+const required = (options) => {
+
+	const defaults = {
+		message: 'This field is required.',
+		messageAttr: 'data-validation-required-message',
+		events: [
 			'focusout',
 			'submit'
-		];
-
-	function getEvents() {
-		return events;
+		]
 	};
+	let settings = Object.assign({}, defaults, options);
 
-	function isRelevant(containerEl, inputEls) {
-	    return inputEls.every(function(el) {
-	        return el.getAttribute('required') !== null;
-	    });
-	};
+	const getSettings = () => {
+		return settings;
+	}
 
-	function validate(matchingField) {
+	const isRelevant = (field) => {
+		return field.inputEls.some(el => el.getAttribute('required') !== null);
+	}
+
+	const validate = (field) => {
 		return new Promise(function(resolve, reject) {
-			let inputEls = matchingField.inputEls;
-			if (inputEls) {
-			    let isValid = inputEls.every(function(el) {
-			        return ((el.value) && (el.value.length > 0));
-			    });
-				if (isValid) {
-					resolve({
-						valid: true
-					});
-				} else {
-					resolve({
-						valid: false,
-						message: messages.requiredMsg,
-						matchingField: matchingField
-					});
-				}
+			if (field.inputEls) {
+				resolve({
+					valid: field.inputEls.some(el => el.value.length > 0)
+				});
 			} else {
-				reject('no inputs');
+				reject('required: No inputs set.');
 			}
-			
 		});
-	};
+	}
+
+	const postprocessMessage = (msg) => {
+		if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
+			return settings.postprocessMessage(msg);
+		} else {
+			return msg;
+		}
+	}
 
 	return {
-		events: getEvents,
+		settings: getSettings(),
 		isRelevant: isRelevant,
-		validate: validate
+		validate: validate,
+		postprocessMessage: postprocessMessage
 	};
 
-};
+}
 
 export default required;
 ```
