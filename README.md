@@ -169,11 +169,10 @@ After the correct error message has been set, it's still possible to process the
 
 ## Rules
 Several prebuilt rule modules are available via [DEGJS](http://degjs.com), including:
-* [Required](https://github.com/DEGJS/formValidation-required)
-* [Required Radio Group](https://github.com/DEGJS/formValidation-requiredRadioGroup)
-* [Email](https://github.com/DEGJS/formValidation-email)
-* [Pattern](https://github.com/DEGJS/formValidation-pattern)
-* [Length](https://github.com/DEGJS/formValidation-length)
+* [required](https://github.com/DEGJS/formValidation-required)
+* [pattern](https://github.com/DEGJS/formValidation-pattern)
+* [email](https://github.com/DEGJS/formValidation-email)
+* [minMaxLength](https://github.com/DEGJS/formValidation-minMaxLength)
 
 ## Writing Your Own Rule
 By following formValidation's rule API, you can also write your own rule module that's asynchronous, Promise-based and can fire on most common [DOM events](https://developer.mozilla.org/en-US/docs/Web/Events) (including form submission, which uses `Promise.all` to validate all of a validation instance's rules at once).
