@@ -42,7 +42,7 @@ import pattern from "DEGJS/formValidation-pattern";
 import required from "DEGJS/formValidation-required";
 
 /* Configure the rules array alongside other validation options. Default rule settings can be overridden at the rule level during instantiation by calling the rule as a function and passing it an options array. */
-let	validationOptions = {
+let validationOptions = {
     rules: [
         pattern,
         required({
