@@ -190,13 +190,13 @@ Must return an object containing the following properties:
 * *events (required):* an array of DOM event names on which the rule should fire
 
 **.isRelevant(field)**  
-Parameters: `field`
+Parameters: `field`  
 Required: `yes`  
 Returns: `Boolean`  
 Must return a boolean value indicating if the rule is relevant to an individual field.
 
 **.validate(matchingField)**  
-Parameters: `field` 
+Parameters: `field`  
 Required: `yes`  
 Returns: `Promise`  
 Perhaps counterintuitively, the validate method should return a resolve() method, regardless of whether validation passes or fails.
