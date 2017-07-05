@@ -60,7 +60,7 @@ Sample Markup:
 ```html
 <form class="form">
     <fieldset>
-        <div class="js-field">
+        <div class="js-validation-field">
             <label for="zip">ZIP Code</label>
             <input type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
         </div>
@@ -97,10 +97,10 @@ The CSS class added to fields when an error is present.
 
 #### options.generatedIdPrefix
 Type: `String` Default: `js-validation-field--`  
-formValidation automatically adds randomly generated IDs to fields that don't already have IDs (i.e., `<div class="js-field" id="js-field--9695013748541">`). This option changes the string that preceds the randomly generated number.
+formValidation automatically adds randomly generated IDs to fields that don't already have IDs (i.e., `<div class="js-validation-field" id="js-validation-field--9695013748541">`). This option changes the string that preceds the randomly generated number.
 
 #### options.inputParentFieldIdAttr
-Type: `String` Default: `data-parent-field-id`  
+Type: `String` Default: `data-validation-field-id`  
 The data attribute name added to inputs, which corresponds with the ID of its parent field.
 
 #### options.scrollToErrorOnSubmit
