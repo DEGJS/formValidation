@@ -161,8 +161,8 @@ Removes all registered fields from the validation instance.
 When an error occurs, formValidation follows a hierarchy to determine which error message to show. This allows fine-grained control over messaging on a field-by-field basis. Error messages will be chosen in the following order of importance:
 
 1. Messages set on the field element via a data attribute. The name of this attribute should be configurable within each rule, and is the same as the attribute at the form level.
-2. Messages set on the form element. The name of this attribute should be configurable within each rule, and is the same as the attribute at the field level.
-3. A default message set within each rule module. This message can be overridden via the "message" property when instantiating the rule. 
+2. Messages set on the form element via a data attribute. The name of this attribute should be configurable within each rule, and is the same as the attribute at the field level.
+3. A default message set by default within each rule module. This message can also be overridden via the "message" property when instantiating the rule. 
 4. A generic fallback message built into formValidation itself.
 
 After the correct error message has been set, it's still possible to process the message before it's displayed (this can be useful when replacing tokens or characters in a message based on a user's input, for example). This can be done via the `postprocessMessage` method within the rule itself, or overridden as a `postprocessMessage` option when instantiating a rule (see the "Writing Your Own Rule" documentation for more information).
