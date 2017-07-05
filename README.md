@@ -120,27 +120,39 @@ Type: `String` Default: `Validation error.`
 Essentially a worst-case scenario error message, should something go wrong with error messages set at the field, form and rule level. You'll probably never see this, but it's configurable, just in case.
 
 #### options.onFormValidationStart
-Type: `String` Default: `null`
+Type: `String`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the callback fired when a form's validation begins.
 
 #### options.onFieldValidationStart
-Type: `String` Default: `null`  
+Type: `String`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the callback fired when a field's validation begins.
 
 #### options.onFormValidationSuccess
-Type: `String` Default: `null` 
+Type: `String`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a form's validation passes.
 
 #### options.onFieldValidationSuccess
-Type: `String` Default: `null`  
+Type: `String`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a field's validation passes.
 
 #### options.onFormValidationError
-Type: `String` Default: `null`  
+Type: `String`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a form's validation fails.
 
 #### options.onFieldValidationError
-Type: `String` Default: `null`  
+Type: `String`  
+Default: `null`  
+Returns: `Object {fields, event}`  
 The name of the event fired when a field's validation fails.
 
 ## Methods
@@ -165,7 +177,7 @@ When an error occurs, formValidation follows a hierarchy to determine which erro
 3. A default message set by default within each rule module. This message can also be overridden via the "message" property when instantiating the rule. 
 4. A generic fallback message built into formValidation itself.
 
-After the correct error message has been set, it's still possible to process the message before it's displayed (this can be useful when replacing tokens or characters in a message based on a user's input, for example). This can be done via the `postprocessMessage` method within the rule itself, or overridden as a `postprocessMessage` option when instantiating a rule (see the "Writing Your Own Rule" documentation for more information).
+After the correct error message has been determined, it's still possible to process the message before it's displayed (this can be useful when replacing tokens or characters in a message based on a user's input, for example). This can be done via the `postprocessMessage` method within the rule itself, or overridden as a `postprocessMessage` option when instantiating a rule (see the "Writing Your Own Rule" documentation for more information).
 
 ## Rules
 Several prebuilt rule modules are available via [DEGJS](http://degjs.com), including:
