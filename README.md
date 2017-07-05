@@ -59,13 +59,13 @@ let validationInst = formValidation(formElement, validationOptions);
 Sample Markup:
 ```html
 <form class="form">
-	<fieldset>
-		<div class="js-field">
-			<label for="zip">ZIP Code</label>
-			<input class="js-field-input" type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
-		</div>
-		<button type="submit">Submit</button>
-	</fieldset>
+    <fieldset>
+        <div class="js-field">
+            <label for="zip">ZIP Code</label>
+            <input type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
+        </div>
+        <button type="submit">Submit</button>
+    </fieldset>
 </form>
 ```
 
@@ -229,56 +229,56 @@ Must return the message it's passed, optionally reformatted if needed. This meth
 ```js
 const required = (options) => {
 
-	const defaults = {
-		message: 'This field is required.',
-		messageAttr: 'data-validation-required-message',
-		events: [
-			'focusout',
-			'submit'
-		]
-	};
-	let settings = Object.assign({}, defaults, options);
+    const defaults = {
+        message: 'This field is required.',
+        messageAttr: 'data-validation-required-message',
+        events: [
+            'focusout',
+            'submit'
+        ]
+    };
+    
+    let settings = Object.assign({}, defaults, options);
 
-	const getSettings = () => {
-		return settings;
-	}
+    const getSettings = () => {
+        return settings;
+    }
 
-	const isRelevant = (field) => {
-		return field.inputEls.some(el => el.getAttribute('required') !== null);
-	}
+    const isRelevant = (field) => {
+        return field.inputEls.some(el => el.getAttribute('required') !== null);
+    }
 
-	const validate = (field) => {
-		return new Promise(function(resolve, reject) {
-			if (field.inputEls) {
-				resolve({
-					valid: field.inputEls.some(el => el.value.length > 0)
-				});
-			} else {
-				reject('required: No inputs set.');
-			}
-		});
-	}
+    const validate = (field) => {
+        return new Promise(function(resolve, reject) {
+            if (field.inputEls) {
+                resolve({
+                    valid: field.inputEls.some(el => el.value.length > 0)
+                });
+            } else {
+                reject('required: No inputs set.');
+            }
+        });
+    }
 
-	const postprocessMessage = (msg) => {
-		if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
-			return settings.postprocessMessage(msg);
-		} else {
-			return msg;
-		}
-	}
+    const postprocessMessage = (msg) => {
+        if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
+            return settings.postprocessMessage(msg);
+	} else {
+            return msg;
+        }
+    }
 
-	return {
-		settings: getSettings(),
-		isRelevant: isRelevant,
-		validate: validate,
-		postprocessMessage: postprocessMessage
-	};
+    return {
+        settings: getSettings(),
+        isRelevant: isRelevant,
+        validate: validate,
+        postprocessMessage: postprocessMessage
+    };
 
 }
 
 export default required;
 ```
-
 
 
 ## Browser Support
