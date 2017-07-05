@@ -158,10 +158,10 @@ Parameters: `none`
 Removes all registered fields from the validation instance.
 
 ## Configuring Error Messages
-When an error occurs, formValidation follows a hierarchy to determine which error message to show. This allows fine-grained control over messaging on a field-by-field basis. Error messages will be chosen in the following order:
+When an error occurs, formValidation follows a hierarchy to determine which error message to show. This allows fine-grained control over messaging on a field-by-field basis. Error messages will be chosen in the following order of importance:
 
-1. Messages set on the field element via a data attribute. The name of this attribute should be configurable within each rule.
-2. Messages set on the form element.
+1. Messages set on the field element via a data attribute. The name of this attribute should be configurable within each rule, and is the same as the attribute at the form level.
+2. Messages set on the form element. The name of this attribute should be configurable within each rule, and is the same as the attribute at the field level.
 3. A default message set within each rule module. This message can be overridden via the "message" property when instantiating the rule. 
 4. A generic fallback message built into formValidation itself.
 
