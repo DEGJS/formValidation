@@ -219,8 +219,8 @@ resolve({
 
 The validate method should only reject the promise when there is a problem with the rule (i.e., when the field passed to it doesn't contain any input elements).
 
-**.postprocessMessage(msg)**
-Parameters: `msg`
+**.postprocessMessage(msg)**  
+Parameters: `msg`  
 Required: `no`  
 Returns: `String`  
 Must return the message it's passed, optionally reformatted if needed. This method should also check for a `settings.postprocessMessage` function, which allows it to be overriden during rule instantiation.
