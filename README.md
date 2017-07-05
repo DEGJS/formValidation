@@ -1,5 +1,5 @@
 # formValidation
-A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
+A modular, promise-based form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
 
 ## Wait...ANOTHER validation plugin?
 You're right; there's no shortage of form validation plugins to choose from. That said, this plugin was written to fulfill some specific needs and workflows that many other validation plugins lack, including:
