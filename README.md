@@ -152,7 +152,7 @@ The name of the event fired when a form's validation fails.
 #### options.onFieldValidationError
 Type: `String`  
 Default: `null`  
-Returns: `Object {fields, event}`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a field's validation fails.
 
 ## Methods
