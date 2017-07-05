@@ -72,85 +72,97 @@ Sample Markup:
 ## Options
 
 #### options.rules
-Type: `Array` Default: `null`  
+Type: `Array`  
+Default: `null`  
 An array of rule module names that should be registered with the validation instance. Each rule in the array must be imported before being instantiated. The rule can be instantiated by listing its name only, or as a function call with options.
 
 #### options.fieldSelector
-Type: `String` Default: `.js-validation-field`  
+Type: `String`  
+Default: `.js-validation-field`  
 The CSS selector for each field element. NOTE: only fields containing this selector will be included in the validation instance on page load.
 
 #### options.inputsSelector
-Type: `String` Default: `input, select, textarea`  
+Type: `String`  
+Default: `input, select, textarea`  
 The CSS selector for each field's input elements.
 
 #### options.errorsClass
-Type: `String` Default: `validation-field__errors`  
+Type: `String`  
+Default: `validation-field__errors`  
 The CSS class added to all error wrapper elements within each field. NOTE: An error wrapper element with this class is automatically added to fields that don't contain one.
 
 #### options.errorClass
-Type: `String` Default: `validation-field__error`  
+Type: `String`  
+Default: `validation-field__error`  
 The CSS class added to individual errors, within each field's error wrapper element.
 
 #### options.hasErrorsClass
-Type: `String` Default: `has-errors`  
+Type: `String`  
+Default: `has-errors`  
 The CSS class added to fields when an error is present.
 
 #### options.generatedIdPrefix
-Type: `String` Default: `js-validation-field--`  
+Type: `String`  
+Default: `js-validation-field--`  
 formValidation automatically adds randomly generated IDs to fields that don't already have IDs (i.e., `<div class="js-validation-field" id="js-validation-field--9695013748541">`). This option changes the string that preceds the randomly generated number.
 
 #### options.inputParentFieldIdAttr
-Type: `String` Default: `data-validation-field-id`  
+Type: `String`  
+Default: `data-validation-field-id`  
 The data attribute name added to inputs, which corresponds with the ID of its parent field.
 
 #### options.scrollToErrorOnSubmit
-Type: `Boolean` Default: `true`  
+Type: `Boolean`  
+Default: `true`  
 Scrolls the page to the first field containing an error when form validation fails. This may be useful on long forms. This option uses the DEGJS scrollTo module. More information on this dependency can be found [here](https://github.com/DEGJS/scrollTo).
 
 #### options.scrollToSpeed
-Type: `Integer` Default: `500`  
+Type: `Integer`  
+Default: `500`  
 Sets the scroll speed of the `scrollToErrorOnFormSubmit` option.
 
 #### options.scrollToEasing
-Type: `String` Default: `easeIn`  
+Type: `String`  
+Default: `easeIn`  
 Sets the easing effect of the `scrollToErrorOnFormSubmit` option.
 
 #### options.defaultErrorMessage
-Type: `String` Default: `Validation error.`  
+Type: `String`  
+Default: `Validation error.`  
 Essentially a worst-case scenario error message, should something go wrong with error messages set at the field, form and rule level. You'll probably never see this, but it's configurable, just in case.
 
 #### options.onFormValidationStart
-Type: `String`  
+Type: `Function`  
 Default: `null`  
 Returns: `Object {fieldsArr, event}`  
 The name of the callback fired when a form's validation begins.
 
 #### options.onFieldValidationStart
-Type: `String`  
+Type: `Function`  
 Default: `null`  
 Returns: `Object {fieldsArr, event}`  
 The name of the callback fired when a field's validation begins.
 
 #### options.onFormValidationSuccess
-Type: `String`  
+Type: `Function`  
 Default: `null`  
 Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a form's validation passes.
 
 #### options.onFieldValidationSuccess
-Type: `String`  
+Type: `Function`  
 Default: `null`  
 Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a field's validation passes.
 
 #### options.onFormValidationError
-Type: `String`  
+Type: `Function`  
 Default: `null`  
 Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a form's validation fails.
 
 #### options.onFieldValidationError
-Type: `String`  
+Type: `Function`  
 Default: `null`  
 Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a field's validation fails.
