@@ -1,6 +1,6 @@
 {
     "name": "formValidation",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.",
     "keywords": [
         "DEGJS",

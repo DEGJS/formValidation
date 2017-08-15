@@ -138,7 +138,7 @@ const formValidation = (formEl, options = {}) => {
 			event: event
 		});
 		clearFieldErrors(field);
-		const matchingRules = field.rules.filter(rule => rule.settings.events.indexOf(event.type) !== -1);
+		const matchingRules = field.rules.filter(rule => rule && rule.settings.events.indexOf(event.type) !== -1);
 
 		return matchingRules.map(rule => runRule(field, rule, event, disableEvent));
 	}
