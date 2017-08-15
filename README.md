@@ -1,5 +1,5 @@
 # formValidation
-A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
+A modular, promise-based form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
 
 ## Wait...ANOTHER validation plugin?
 You're right; there's no shortage of form validation plugins to choose from. That said, this plugin was written to fulfill some specific needs and workflows that many other validation plugins lack, including:
@@ -42,7 +42,7 @@ import pattern from "DEGJS/formValidation-pattern";
 import required from "DEGJS/formValidation-required";
 
 /* Configure the rules array alongside other validation options. Default rule settings can be overridden at the rule level during instantiation by calling the rule as a function and passing it an options array. */
-let	validationOptions = {
+let validationOptions = {
     rules: [
         pattern,
         required({
@@ -59,88 +59,112 @@ let validationInst = formValidation(formElement, validationOptions);
 Sample Markup:
 ```html
 <form class="form">
-	<fieldset>
-		<div class="js-field">
-			<label for="zip">ZIP Code</label>
-			<input class="js-field-input" type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
-		</div>
-		<button type="submit">Submit</button>
-	</fieldset>
+    <fieldset>
+        <div class="js-validation-field">
+            <label for="zip">ZIP Code</label>
+            <input type="text" required pattern="^\d{5}(-\d{4})?$" id="zip" name="zip">
+        </div>
+        <button type="submit">Submit</button>
+    </fieldset>
 </form>
 ```
 
 ## Options
 
 #### options.rules
-Type: `Array` Default: `null`  
+Type: `Array`  
+Default: `null`  
 An array of rule module names that should be registered with the validation instance. Each rule in the array must be imported before being instantiated. The rule can be instantiated by listing its name only, or as a function call with options.
 
 #### options.fieldSelector
-Type: `String` Default: `.js-validation-field`  
+Type: `String`  
+Default: `.js-validation-field`  
 The CSS selector for each field element. NOTE: only fields containing this selector will be included in the validation instance on page load.
 
 #### options.inputsSelector
-Type: `String` Default: `input, select, textarea`  
+Type: `String`  
+Default: `input, select, textarea`  
 The CSS selector for each field's input elements.
 
 #### options.errorsClass
-Type: `String` Default: `validation-field__errors`  
+Type: `String`  
+Default: `validation-field__errors`  
 The CSS class added to all error wrapper elements within each field. NOTE: An error wrapper element with this class is automatically added to fields that don't contain one.
 
 #### options.errorClass
-Type: `String` Default: `validation-field__error`  
+Type: `String`  
+Default: `validation-field__error`  
 The CSS class added to individual errors, within each field's error wrapper element.
 
 #### options.hasErrorsClass
-Type: `String` Default: `has-errors`  
+Type: `String`  
+Default: `has-errors`  
 The CSS class added to fields when an error is present.
 
 #### options.generatedIdPrefix
-Type: `String` Default: `js-validation-field--`  
-formValidation automatically adds randomly generated IDs to fields that don't already have IDs (i.e., `<div class="js-field" id="js-field--9695013748541">`). This option changes the string that preceds the randomly generated number.
+Type: `String`  
+Default: `js-validation-field--`  
+formValidation automatically adds randomly generated IDs to fields that don't already have IDs (i.e., `<div class="js-validation-field" id="js-validation-field--9695013748541">`). This option changes the string that preceds the randomly generated number.
 
 #### options.inputParentFieldIdAttr
-Type: `String` Default: `data-parent-field-id`  
+Type: `String`  
+Default: `data-validation-field-id`  
 The data attribute name added to inputs, which corresponds with the ID of its parent field.
 
 #### options.scrollToErrorOnSubmit
-Type: `Boolean` Default: `true`  
+Type: `Boolean`  
+Default: `true`  
 Scrolls the page to the first field containing an error when form validation fails. This may be useful on long forms. This option uses the DEGJS scrollTo module. More information on this dependency can be found [here](https://github.com/DEGJS/scrollTo).
 
 #### options.scrollToSpeed
-Type: `Integer` Default: `500`  
+Type: `Integer`  
+Default: `500`  
 Sets the scroll speed of the `scrollToErrorOnFormSubmit` option.
 
 #### options.scrollToEasing
-Type: `String` Default: `easeIn`  
+Type: `String`  
+Default: `easeIn`  
 Sets the easing effect of the `scrollToErrorOnFormSubmit` option.
 
 #### options.defaultErrorMessage
-Type: `String` Default: `Validation error.`  
+Type: `String`  
+Default: `Validation error.`  
 Essentially a worst-case scenario error message, should something go wrong with error messages set at the field, form and rule level. You'll probably never see this, but it's configurable, just in case.
 
 #### options.onFormValidationStart
-Type: `String` Default: `null`
+Type: `Function`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the callback fired when a form's validation begins.
 
 #### options.onFieldValidationStart
-Type: `String` Default: `null`  
+Type: `Function`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the callback fired when a field's validation begins.
 
 #### options.onFormValidationSuccess
-Type: `String` Default: `null` 
+Type: `Function`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a form's validation passes.
 
 #### options.onFieldValidationSuccess
-Type: `String` Default: `null`  
+Type: `Function`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a field's validation passes.
 
 #### options.onFormValidationError
-Type: `String` Default: `null`  
+Type: `Function`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a form's validation fails.
 
 #### options.onFieldValidationError
-Type: `String` Default: `null`  
+Type: `Function`  
+Default: `null`  
+Returns: `Object {fieldsArr, event}`  
 The name of the event fired when a field's validation fails.
 
 ## Methods
@@ -158,14 +182,14 @@ Parameters: `none`
 Removes all registered fields from the validation instance.
 
 ## Configuring Error Messages
-When an error occurs, formValidation follows a hierarchy to determine which error message to show. This allows fine-grained control over messaging on a field-by-field basis. Error messages will be chosen in the following order:
+When an error occurs, formValidation follows a hierarchy to determine which error message to show. This allows fine-grained control over messaging on a field-by-field basis. Error messages will be chosen in the following order of importance:
 
-1. Messages set on the field element via a data attribute. The name of this attribute should be configurable within each rule.
-2. Messages set on the form element.
-3. A default message set within each rule module. This message can be overridden via the "message" property when instantiating the rule. 
+1. Messages set on the field element via a data attribute. The name of this attribute should be configurable within each rule, and is the same as the attribute at the form level.
+2. Messages set on the form element via a data attribute. The name of this attribute should be configurable within each rule, and is the same as the attribute at the field level.
+3. A default message set by default within each rule module. This message can also be overridden via the "message" property when instantiating the rule. 
 4. A generic fallback message built into formValidation itself.
 
-After the correct error message has been set, it's still possible to process the message before it's displayed (this can be useful when replacing tokens or characters in a message based on a user's input, for example). This can be done via the `postprocessMessage` method within the rule itself, or overridden as a `postprocessMessage` option when instantiating a rule (see the "Writing Your Own Rule" documentation for more information).
+After the correct error message has been determined, it's still possible to process the message before it's displayed (this can be useful when replacing tokens or characters in a message based on a user's input, for example). This can be done via the `postprocessMessage` method within the rule itself, or overridden as a `postprocessMessage` option when instantiating a rule (see the "Writing Your Own Rule" documentation for more information).
 
 ## Rules
 Several prebuilt rule modules are available via [DEGJS](http://degjs.com), including:
@@ -190,13 +214,13 @@ Must return an object containing the following properties:
 * *events (required):* an array of DOM event names on which the rule should fire
 
 **.isRelevant(field)**  
-Parameters: `field`
+Parameters: `field`  
 Required: `yes`  
 Returns: `Boolean`  
 Must return a boolean value indicating if the rule is relevant to an individual field.
 
 **.validate(matchingField)**  
-Parameters: `field` 
+Parameters: `field`  
 Required: `yes`  
 Returns: `Promise`  
 Perhaps counterintuitively, the validate method should return a resolve() method, regardless of whether validation passes or fails.
@@ -219,8 +243,8 @@ resolve({
 
 The validate method should only reject the promise when there is a problem with the rule (i.e., when the field passed to it doesn't contain any input elements).
 
-**.postprocessMessage(msg)**
-Parameters: `msg`
+**.postprocessMessage(msg)**  
+Parameters: `msg`  
 Required: `no`  
 Returns: `String`  
 Must return the message it's passed, optionally reformatted if needed. This method should also check for a `settings.postprocessMessage` function, which allows it to be overriden during rule instantiation.
@@ -229,56 +253,56 @@ Must return the message it's passed, optionally reformatted if needed. This meth
 ```js
 const required = (options) => {
 
-	const defaults = {
-		message: 'This field is required.',
-		messageAttr: 'data-validation-required-message',
-		events: [
-			'focusout',
-			'submit'
-		]
-	};
-	let settings = Object.assign({}, defaults, options);
+    const defaults = {
+        message: 'This field is required.',
+        messageAttr: 'data-validation-required-message',
+        events: [
+            'focusout',
+            'submit'
+        ]
+    };
+    
+    let settings = Object.assign({}, defaults, options);
 
-	const getSettings = () => {
-		return settings;
-	}
+    const getSettings = () => {
+        return settings;
+    }
 
-	const isRelevant = (field) => {
-		return field.inputEls.some(el => el.getAttribute('required') !== null);
-	}
+    const isRelevant = (field) => {
+        return field.inputEls.some(el => el.getAttribute('required') !== null);
+    }
 
-	const validate = (field) => {
-		return new Promise(function(resolve, reject) {
-			if (field.inputEls) {
-				resolve({
-					valid: field.inputEls.some(el => el.value.length > 0)
-				});
-			} else {
-				reject('required: No inputs set.');
-			}
-		});
-	}
+    const validate = (field) => {
+        return new Promise(function(resolve, reject) {
+            if (field.inputEls) {
+                resolve({
+                    valid: field.inputEls.some(el => el.value.length > 0)
+                });
+            } else {
+                reject('required: No inputs set.');
+            }
+        });
+    }
 
-	const postprocessMessage = (msg) => {
-		if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
-			return settings.postprocessMessage(msg);
-		} else {
-			return msg;
-		}
-	}
+    const postprocessMessage = (msg) => {
+        if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
+            return settings.postprocessMessage(msg);
+	} else {
+            return msg;
+        }
+    }
 
-	return {
-		settings: getSettings(),
-		isRelevant: isRelevant,
-		validate: validate,
-		postprocessMessage: postprocessMessage
-	};
+    return {
+        settings: getSettings(),
+        isRelevant: isRelevant,
+        validate: validate,
+        postprocessMessage: postprocessMessage
+    };
 
 }
 
 export default required;
 ```
-
 
 
 ## Browser Support
