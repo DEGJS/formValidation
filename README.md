@@ -264,15 +264,15 @@ const required = (options) => {
     
     let settings = Object.assign({}, defaults, options);
 
-    const getSettings = () => {
+    function getSettings() {
         return settings;
     }
 
-    const isRelevant = (field) => {
+    function isRelevant(field) {
         return field.inputEls.some(el => el.getAttribute('required') !== null);
     }
 
-    const validate = (field) => {
+    function validate (field) {
         return new Promise(function(resolve, reject) {
             if (field.inputEls) {
                 resolve({
@@ -284,7 +284,7 @@ const required = (options) => {
         });
     }
 
-    const postprocessMessage = (msg) => {
+    function postprocessMessage(msg) {
         if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
             return settings.postprocessMessage(msg);
 	} else {
