@@ -1,6 +1,18 @@
 # formValidation
 A modular, promise-based form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
 
+* [Intro](#waitanother-validation-plugin)
+* [Installation](#installation)
+* [Dependencies](#dependencies)
+* [Usage](#usage)
+* [Options](#options)
+* [Methods](#methods)
+* [Configuring Error Messages](#configuring-error-messages)
+* [Rules](#rules)
+* [Writing Your Own Rule](#writing-your-own-rule)
+* [Browser Support](#browser-support)
+
+
 ## Wait...ANOTHER validation plugin?
 You're right; there's no shortage of form validation plugins to choose from. That said, this plugin was written to fulfill some specific needs and workflows that many other validation plugins lack, including:
 
@@ -12,7 +24,7 @@ You're right; there's no shortage of form validation plugins to choose from. Tha
 * The ability to add and remove fields from the validation instance on the fly.
 * Customizable error messaging that can be set at the field, form or rule level, on a field-by-field basis.
 
-## Install
+## Installation
 formValidation is an ES6 module. Consequently, you'll need an ES6 transpiler ([Babel](https://babeljs.io) is a nice one) and a module loader ([SystemJS](https://github.com/systemjs/systemjs) will do the job) as part of your Javascript workflow.
 
 If you're already using [JSPM package manager](http://jspm.io) for your project, you can install formValidation with the following command:
