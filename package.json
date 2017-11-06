@@ -1,6 +1,6 @@
 {
     "name": "formValidation",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.",
     "keywords": [
         "DEGJS",
@@ -31,8 +31,8 @@
             "lib": "src"
         },
         "dependencies": {
-            "DEGJS/domUtils": "github:DEGJS/domUtils@^2.0.0",
-            "DEGJS/objectUtils": "github:DEGJS/objectUtils@^2.0.0",
+            "DEGJS/domUtils": "github:DEGJS/domUtils@^2.1.1",
+            "DEGJS/objectUtils": "github:DEGJS/objectUtils@^2.1.0",
             "DEGJS/scrollTo": "github:DEGJS/scrollTo@^1.0.1"
         }
     }
