@@ -109,7 +109,7 @@ const formValidation = (formEl, options = {}) => {
 							}, submitForm);
 						} else {
 							if (settings.scrollToErrorOnSubmit) {
-								const errorEl = testResults[0].field.errorEl;
+								const errorEl = testResults.find(result => result.valid === false).field.fieldEl;
 								scrollToError(errorEl, settings.scrollToSpeed, settings.scrollToEasing);
 							}
 							processCallback(settings.onFormValidationError, {
