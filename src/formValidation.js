@@ -175,7 +175,7 @@ const formValidation = (formEl, options = {}) => {
 				fields: ensureArray(args.field),
 				event: args.event
 			}, () => {
-				args.field.fieldEl.classList.add(settings.hasErrorClass);
+				args.field.fieldEl.classList.add(settings.hasErrorsClass);
 				renderValidationMessage(args, settings);
 			});
 		}
