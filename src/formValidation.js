@@ -47,7 +47,7 @@ const formValidation = (formEl, options = {}) => {
 		registerFields(fieldEls);
 	}
 
-	const registerFields = (fieldEls) => {
+	const registerFields = fieldEls => {
 		ensureArray(fieldEls);
 		fieldEls.forEach(fieldEl => {
 			const inputEls = Array.from(fieldEl.querySelectorAll(settings.inputsSelector));
@@ -67,7 +67,7 @@ const formValidation = (formEl, options = {}) => {
 		});
 	}
 
-	const registerRules = (field) => {
+	const registerRules = field => {
 		return settings.rules.map(rule => {
 			const ruleInst = typeof rule === 'function' ? rule() : rule;
 			checkRuleIntegrity(ruleInst, rule.name);
@@ -78,7 +78,7 @@ const formValidation = (formEl, options = {}) => {
 		});
 	}
 
-	const registerEvents = (rule) => {
+	const registerEvents = rule => {
 		rule.settings.events.forEach(eventName => {
 			if (events.indexOf(eventName) === -1) {
 				events.push(eventName);
@@ -87,7 +87,7 @@ const formValidation = (formEl, options = {}) => {
 		});
 	}
 
-	const onEvent = (event) => {
+	const onEvent = event => {
 		if (stateInst.get().length > 0) {
 			const el = event.target;
 			if (el === formEl) {
@@ -139,7 +139,6 @@ const formValidation = (formEl, options = {}) => {
 		});
 		clearFieldErrors(field);
 		const matchingRules = field.rules.filter(rule => rule && rule.settings.events.indexOf(event.type) !== -1);
-
 		return matchingRules.map(rule => runRule(field, rule, event, disableEvent));
 	}
 
@@ -160,7 +159,7 @@ const formValidation = (formEl, options = {}) => {
 			.catch(errorMsg => logError(errorMsg));
 	}
 
-	const onValidationSuccess = (args) => {
+	const onValidationSuccess = args => {
 		if (args.disableEvent !== true) {
 			processCallback(settings.onFieldValidationSuccess, {
 				fields: ensureArray(args.field),
@@ -169,24 +168,23 @@ const formValidation = (formEl, options = {}) => {
 		}
 	}
 
-	const onValidationError = (args) => {
+	const onValidationError = args => {
 		if (args.disableEvent !== true) {
 			processCallback(settings.onFieldValidationError, {
 				fields: ensureArray(args.field),
 				event: args.event
-			}, () => {
-				args.field.fieldEl.classList.add(settings.hasErrorsClass);
-				renderValidationMessage(args, settings);
 			});
+			args.field.fieldEl.classList.add(settings.hasErrorsClass);
+			renderValidationMessage(args, settings);
 		}
 	}
 
-	const clearFieldErrors = (field) => {
+	const clearFieldErrors = field => {
 		field.fieldEl.classList.remove(settings.hasErrorsClass);
 		emptyElements(field.errorsEl);
 	}
 
-	const removeFields = (elOrIdArr) => {
+	const removeFields = elOrIdArr => {
 		elOrIdArr = ensureArray(elOrIdArr);
 		elOrIdArr.forEach(elOrId => {
 			let id = elOrId;
