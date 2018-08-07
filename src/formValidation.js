@@ -205,10 +205,8 @@ const formValidation = (formEl, options = {}) => {
 	const processCallback = (callback, vals, elseFn = null) => {
 		if (callback !== null) {
 			callback(vals);
-		} else {
-			if (elseFn !== null) {
-				elseFn(vals.event);
-			}
+		} else if (elseFn !== null) {
+			elseFn(vals.event);
 		}
 	}
 
