@@ -17,7 +17,7 @@ A modular, promise-based form validation plugin, free of third-party dependencie
 You're right; there's no shortage of form validation plugins to choose from. That said, this plugin was written to fulfill some specific needs and workflows that many other validation plugins lack, including:
 
 * No third-party dependencies (especially jQuery)
-* Written as an ES6 module, and compatible with the [JSPM package manager](http://jspm.io).
+* Written as an ES6 module.
 * Extensible, to allow new validation rules (also written as ES6 modules) to be easily written, installed and bundled as needed.
 * Built to progressively enhance HTML5 validation patterns whenever possible.
 * Promise-based, asynchronous validation rules.
@@ -25,33 +25,33 @@ You're right; there's no shortage of form validation plugins to choose from. Tha
 * Customizable error messaging that can be set at the field, form or rule level, on a field-by-field basis.
 
 ## Installation
-formValidation is an ES6 module. Consequently, you'll need an ES6 transpiler ([Babel](https://babeljs.io) is a nice one) and a module loader ([SystemJS](https://github.com/systemjs/systemjs) will do the job) as part of your Javascript workflow.
+formValidation is an ES6 module. Consequently, you might need an ES6 transpiler ([Babel](https://babeljs.io) is a nice one) as part of your Javascript workflow.
 
-If you're already using [JSPM package manager](http://jspm.io) for your project, you can install formValidation with the following command:
-
-```
-$ jspm install github:DEGJS/formValidation
-```
-
-formValidation rule modules that are hosted on GitHub or NPM can similarly be installed with JSPM:
+If you're already using NPM for your project, you can install formValidation with the following command:
 
 ```
-$ jspm install github:DEGJS/formValidation-required
+$ npm install @degjs/form-validation
+```
+
+formValidation rule modules that are hosted on GitHub or NPM can similarly be installed:
+
+```
+$ npm install @degjs/form-validation-required
 ```
 
 ## Dependencies
-formValidation doesn't rely on any third-party dependencies, but does make use of three small dependencies from its own [DEGJS](http://degjs.com/) ecosystem. These dependencies will be automatically installed and configured if you install formValidation via JSPM; however, if you install manually, you'll also need to manually include the [domUtils](https://github.com/DEGJS/domUtils), [objectUtils](https://github.com/DEGJS/objectUtils) and [scrollTo](https://github.com/DEGJS/scrollTo) DEGJS modules.
+formValidation doesn't rely on any third-party dependencies, but does make use of three small dependencies from its own [DEGJS](http://degjs.com/) ecosystem. These dependencies will be automatically installed and configured if you install formValidation via NPM; however, if you install manually, you'll also need to manually include the [domUtils](https://github.com/DEGJS/domUtils), [objectUtils](https://github.com/DEGJS/objectUtils) and [scrollTo](https://github.com/DEGJS/scrollTo) DEGJS modules.
 
 ## Usage
 formValidation is designed to be modular and does not include any rules modules out of the box. Therefore, you'll need to import and instantiate all of the rule modules needed for your form.
 
 Sample Javascript:
 ```js
-import formValidation from "DEGJS/formValidation";
+import formValidation from "@degjs/form-validation";
 
 /* Import the Required and Pattern rule modules */
-import pattern from "DEGJS/formValidation-pattern";
-import required from "DEGJS/formValidation-required";
+import pattern from "@degjs/form-validation-pattern";
+import required from "@degjs/form-validation-required";
 
 /* Configure the rules array alongside other validation options. Default rule settings can be overridden at the rule level during instantiation by calling the rule as a function and passing it an options array. */
 let validationOptions = {
