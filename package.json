@@ -46,19 +46,25 @@
         "@babel/preset-env": "^7.1.0",
         "babel-core": "^7.0.0-bridge.0",
         "babel-jest": "^23.6.0",
-        "jest": "^23.6.0"
+        "jest": "^23.6.0",
+        "prettier": "^1.14.3"
     },
     "scripts": {
         "test": "jest"
     },
     "jest": {
-		"testPathIgnorePatterns": [
-			"/node_modules/"
-		]
-	},
-	"babel": {
-		"presets": [
-			"@babel/preset-env"
-		]
-	}
+        "testPathIgnorePatterns": [
+            "/node_modules/"
+        ]
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    },
+    "prettier": {
+        "useTabs": true,
+        "tabWidth": 4,
+        "bracketSpacing": false
+    }
 }
