@@ -1,4 +1,4 @@
-import scrollTo from "DEGJS/scrollTo";
+import scrollTo from "@degjs/scroll-to";
 
 const logError = (msg = '', el = null, level = 'log') => {
 	const msgPrefix = 'formValidation: ';

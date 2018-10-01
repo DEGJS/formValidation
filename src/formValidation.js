@@ -1,10 +1,10 @@
 // DEGJS modules
-import { emptyElements, isElement } from "DEGJS/domUtils";
-import { ensureArray } from "DEGJS/objectUtils";
+import { emptyElements, isElement } from "@degjs/dom-utils";
+import { ensureArray } from "@degjs/object-utils";
 
 // Utils
 import state from "./utils/state";
-import { getUniqueId, generateId } from "./utils/idUtils";
+import { getUniqueId } from "./utils/idUtils";
 import { checkFormIntegrity, checkFieldIntegrity, checkRuleIntegrity, disableBrowserValidation } from "./utils/formUtils";
 import { logError, scrollToError } from "./utils/errorUtils";
 
