@@ -29,6 +29,7 @@ jest.mock('../src/renderers/renderers', () => ({
 import formValidation from '../src/formValidation';
 import formUtils from '../src/utils/formUtils';
 import idUtils from '../src/utils/idUtils';
+import errorUtils from '../src/utils/errorUtils';
 import state from '../src/utils/state';
 import {emptyElements} from '@degjs/dom-utils';
 
@@ -147,9 +148,184 @@ describe('formValidation', () => {
         });
     });
 
-    it('reset', () => {
+    it('resets when invoked', () => {
         const fvInst = formValidation(formEl, {});
         fvInst.reset();
         expect(emptyElements).toHaveBeenCalled();
-    })
+    });
+
+    describe('onEvent', () => {
+        const mockSettings = {
+            rules: [
+                { 
+                    isRelevant: () => true,
+                    settings: { events: ['testEvent'] }
+                }
+            ],
+            onFieldValidationStart: jest.fn(),
+            onFieldValidationSuccess: jest.fn(),
+            onFieldValidationError: jest.fn(),
+            onFormValidationStart: jest.fn(),
+            onFormValidationSuccess: jest.fn(),
+            onFormValidationError: jest.fn()
+        };
+
+        describe('run field rules', () => {
+            it('should call onFieldValidationStart',  () => {
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFieldValidationStart).toHaveBeenCalled();
+            });
+
+            it('should call onFieldValidationSuccess', async () => {
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                await formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFieldValidationSuccess).toHaveBeenCalled();
+            });
+
+            it('should call onFieldValidationError', async () => {
+                const mockState = [
+                    {
+                        fieldEl : {
+                            classList: {
+                                remove: () => true,
+                                add: () => true
+                            }
+                        },
+                        rules: [
+                            {
+                                settings: {events: ['testEvent']},
+                                validate: () => {
+                                    return new Promise((resolve, reject) => resolve({valid: false}))
+                                }
+                            }
+                        ]
+                    }
+                ];
+                
+                stateInst.set(mockState);
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                await formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFieldValidationError).toHaveBeenCalled();
+
+            });
+
+        });
+
+        describe('for form', () => {
+            it('should call formValidationStart', () => {
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFormValidationStart).toHaveBeenCalled();
+            });
+
+            it('should call onFormValidationSuccess', () => {
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFormValidationSuccess).toHaveBeenCalled();
+            });
+
+            it('should call onFormValidationError', async () => {
+                const mockState = [
+                    {
+                        fieldEl : {
+                            classList: {
+                                remove: () => true,
+                                add: () => true
+                            }
+                        },
+                        rules: [
+                            {
+                                settings: {events: ['testEvent']},
+                                validate: () => {
+                                    return new Promise((resolve, reject) => resolve({valid: false}))
+                                }
+                            }
+                        ]
+                    }
+                ];
+                
+                stateInst.set(mockState);
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                await formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFormValidationError).toHaveBeenCalled();
+            });
+
+            it('should handle a rejected validation tests', async () => {
+                const errorMsg = 'Something went horribly wrong';
+                const mockState = [
+                    {
+                        fieldEl : {
+                            classList: {
+                                remove: () => true,
+                                add: () => true
+                            }
+                        },
+                        rules: [
+                            {
+                                settings: {events: ['testEvent']},
+                                validate: () => {
+                                    return new Promise((resolve, reject) => reject(errorMsg))
+                                }
+                            }
+                        ]
+                    }
+                ];
+                
+                stateInst.set(mockState);
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                await formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFormValidationError).toHaveBeenCalled();
+
+            });
+
+            it('should scroll to error if setting enabled', async () => {
+                const mockState = [
+                    {
+                        fieldEl : {
+                            classList: {
+                                remove: () => true,
+                                add: () => true
+                            }
+                        },
+                        rules: [
+                            {
+                                settings: {events: ['testEvent']},
+                                validate: () => {
+                                    return new Promise((resolve, reject) => resolve({
+                                        valid: false,
+                                        field: {
+                                            fieldEl: 'test'
+                                        }
+                                    }))
+                                }
+                            }
+                        ]
+                    }
+                ];
+                const newSettings = {...mockSettings, ...{scrollToErrorOnSubmit: true}}
+                
+                stateInst.set(mockState);
+                formValidation(formEl, newSettings);
+                const event = new Event('testEvent');
+                await formEl.dispatchEvent(event);
+
+                expect(errorUtils.scrollToError).toHaveBeenCalled();
+            });
+       });
+    });
 });

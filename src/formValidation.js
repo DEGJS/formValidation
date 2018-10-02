@@ -100,7 +100,7 @@ const formValidation = (formEl, options = {}) => {
 					return previousValue.concat(runFieldRules(field, event, settings.disableFieldEventsOnSubmit));
 				}, []);
 
-				Promise.all(validationTests)
+				return Promise.all(validationTests)
 					.then(testResults => {
 						if (testResults.every(result => result.valid === true)) {
 							processCallback(settings.onFormValidationSuccess, {
@@ -126,7 +126,8 @@ const formValidation = (formEl, options = {}) => {
 			} else {
 				const field = stateInst.getField(el.getAttribute(settings.inputParentFieldIdAttr));
 				if (field) {
-					runFieldRules(field, event);
+					
+					return Promise.all(runFieldRules(field, event));
 				}
 			}
 		}
