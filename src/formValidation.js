@@ -1,10 +1,10 @@
 // DEGJS modules
-import { emptyElements, isElement } from "DEGJS/domUtils";
-import { ensureArray } from "DEGJS/objectUtils";
+import { emptyElements, isElement } from "@degjs/dom-utils";
+import { ensureArray } from "@degjs/object-utils";
 
 // Utils
 import state from "./utils/state";
-import { getUniqueId, generateId } from "./utils/idUtils";
+import { getUniqueId } from "./utils/idUtils";
 import { checkFormIntegrity, checkFieldIntegrity, checkRuleIntegrity, disableBrowserValidation } from "./utils/formUtils";
 import { logError, scrollToError } from "./utils/errorUtils";
 
@@ -100,7 +100,7 @@ const formValidation = (formEl, options = {}) => {
 					return previousValue.concat(runFieldRules(field, event, settings.disableFieldEventsOnSubmit));
 				}, []);
 
-				Promise.all(validationTests)
+				return Promise.all(validationTests)
 					.then(testResults => {
 						if (testResults.every(result => result.valid === true)) {
 							processCallback(settings.onFormValidationSuccess, {
@@ -126,7 +126,8 @@ const formValidation = (formEl, options = {}) => {
 			} else {
 				const field = stateInst.getField(el.getAttribute(settings.inputParentFieldIdAttr));
 				if (field) {
-					runFieldRules(field, event);
+					
+					return Promise.all(runFieldRules(field, event));
 				}
 			}
 		}

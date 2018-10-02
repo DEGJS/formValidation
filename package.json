@@ -1,10 +1,12 @@
 {
-    "name": "formValidation",
-    "version": "2.0.0",
+    "name": "@degjs/form-validation",
+    "version": "3.0.0",
     "description": "A modular form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.",
     "keywords": [
         "DEGJS",
-        "formValidation"
+        "formValidation",
+        "forms",
+        "validation"
     ],
     "author": {
         "name": "Aaron Ladage",
@@ -15,6 +17,10 @@
         {
             "name": "Ryan Heap",
             "email": "rheap@degdigital.com"
+        },
+        {
+            "name": "Anna Scheuler",
+            "email": "scheul93@gmail.com"
         }
     ],
     "license": "MIT",
@@ -22,18 +28,43 @@
         "type": "git",
         "url": "https://github.com/DEGJS/formValidation.git"
     },
+    "files": [
+        "src"
+    ],
+    "main": "src/formValidation.js",
     "bugs": "https://github.com/DEGJS/formValidation/issues",
-    "jspm": {
-        "registry": "jspm",
-        "format": "es6",
-        "main": "formValidation.js",
-        "directories": {
-            "lib": "src"
-        },
-        "dependencies": {
-            "DEGJS/domUtils": "github:DEGJS/domUtils@^2.1.1",
-            "DEGJS/objectUtils": "github:DEGJS/objectUtils@^2.1.0",
-            "DEGJS/scrollTo": "github:DEGJS/scrollTo@^1.0.1"
-        }
+    "dependencies": {
+        "@degjs/dom-utils": "^3.0.0",
+        "@degjs/object-utils": "^3.0.0",
+        "@degjs/scroll-to": "^2.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.1.0",
+        "@babel/preset-env": "^7.1.0",
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-jest": "^23.6.0",
+        "jest": "^23.6.0",
+        "prettier": "^1.14.3"
+    },
+    "scripts": {
+        "test": "jest"
+    },
+    "jest": {
+        "testPathIgnorePatterns": [
+            "/node_modules/"
+        ]
+    },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    },
+    "prettier": {
+        "useTabs": true,
+        "tabWidth": 4,
+        "bracketSpacing": false
     }
 }
