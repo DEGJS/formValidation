@@ -36,10 +36,11 @@ import {emptyElements} from '@degjs/dom-utils';
 describe('formValidation', () => {
     let formEl;
     let stateInst;
+    let fieldEl;
 
     beforeEach(() => {
         formEl = document.createElement('form');
-        const fieldEl = document.createElement('div');
+        fieldEl = document.createElement('div');
         fieldEl.classList.add('js-validation-field');
         const inputEl = document.createElement('input');
         
@@ -171,6 +172,11 @@ describe('formValidation', () => {
         };
 
         describe('run field rules', () => {
+
+            beforeEach(() => {
+                jest.restoreAllMocks();
+            })
+
             it('should call onFieldValidationStart',  () => {
                 formValidation(formEl, mockSettings);
                 const event = new Event('testEvent');
@@ -178,6 +184,15 @@ describe('formValidation', () => {
 
                 expect(mockSettings.onFieldValidationStart).toHaveBeenCalled();
             });
+
+            it('should call onFieldValidationStart for multiple fields', () => {
+                formEl.appendChild(fieldEl);
+                formValidation(formEl, mockSettings);
+                const event = new Event('testEvent');
+                formEl.dispatchEvent(event);
+
+                expect(mockSettings.onFieldValidationStart).toHaveBeenCalledTimes(2);
+            })
 
             it('should call onFieldValidationSuccess', async () => {
                 formValidation(formEl, mockSettings);
@@ -328,4 +343,58 @@ describe('formValidation', () => {
             });
        });
     });
+
+    describe('registers multiple fields', () => {
+        beforeEach(() => {
+            formEl = document.createElement('form');
+            const fieldEl1 = document.createElement('div');
+            fieldEl1.classList.add('js-validation-field');
+            const fieldEl2 = document.createElement('div');
+            fieldEl2.classList.add('js-validation-field');
+            const inputEl = document.createElement('input');
+            
+            fieldEl1.appendChild(inputEl);
+            fieldEl2.appendChild(inputEl);
+            formEl.appendChild(fieldEl1);
+            formEl.appendChild(fieldEl2);
+
+            stateInst = state();
+            jest.clearAllMocks();
+        });
+
+        describe('registerFields', () => {
+
+            it('should generate unique id', () => {
+                formValidation(formEl, {});
+                expect(idUtils.getUniqueId).toHaveBeenCalledTimes(2);
+            });
+
+            it('should check field integrity', () => {
+                formValidation(formEl, {});
+                expect(formUtils.checkFieldIntegrity).toHaveBeenCalledTimes(2);
+            });
+
+            it('should add field', () => {
+                formValidation(formEl, {});
+                expect(stateInst.addField).toHaveBeenCalledTimes(2);
+            });
+
+            it('should add field vals', () => {
+                formValidation(formEl, {});
+                expect(stateInst.addFieldVals).toHaveBeenCalledTimes(2);
+            });
+
+            it('should register rules', () => {
+                formValidation(formEl, {
+                    rules: [
+                        { 
+                            isRelevant: () => true,
+                            settings: { events: [] }
+                        }
+                    ]
+                });
+                expect(formUtils.checkRuleIntegrity).toHaveBeenCalledTimes(2);
+            });
+        });
+    })
 });
