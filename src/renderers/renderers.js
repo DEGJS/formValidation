@@ -23,7 +23,7 @@ const renderValidationMessage = (args, settings) => {
 	let correctError = getErrorMessage(messagesArr);
 
 	if (customMessageProcessorIsSet(args)) {
-		correctError = args.rule.processMessage(correctError);
+		correctError = args.rule.postprocessMessage(correctError, field);
 	}
 	field.errorsEl.insertAdjacentHTML('beforeend', `
 		<div class="${settings.errorClass}">${correctError}</div>
@@ -31,7 +31,7 @@ const renderValidationMessage = (args, settings) => {
 }
 
 const customMessageProcessorIsSet = (args) => {
-	return args && args.rule && args.rule.processMessage && typeof args.rule.processMessage === 'function';
+	return args && args.rule && args.rule.postprocessMessage && typeof args.rule.postprocessMessage === 'function';
 }
 
 const getErrorMessage = (messagesArr) => {
