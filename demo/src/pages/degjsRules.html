@@ -47,7 +47,9 @@ import required from '@degjs/form-validation-required';
 /* configure required rule to be used */
 const validationOpts = {
     rules: [
-        required
+        required({
+            events: ['submit']
+        })
     ]
 };
 
@@ -173,28 +175,6 @@ const validationInst = formValidation(formEl, validationOpts);
                             </div>
                             <button type="submit">Submit</button>
                         </form>
-                    </div>
-                </div>
-
-                <div class="example">
-                    <h2 class="example__heading">formValidation with minMaxLength rule</h2>
-                    <div class="code-wrap example__code-wrap">
-                        <pre class="language-js">
-                            <code class="code">
-import formValidation from '@degjs/form-validation';
-import minMaxLength from '@degjs/form-validation-min-max-length';
-
-/* configure minMaxLength rule to be used */
-const validationOpts = {
-    rules: [
-        minMaxLength
-    ]
-};
-
-const formEl = document.querySelector('.js-example-form-4');
-const validationInst = formValidation(formEl, validationOpts);
-                            </code>
-                        </pre>
                     </div>
                 </div>
             </div>

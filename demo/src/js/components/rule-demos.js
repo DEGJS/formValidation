@@ -9,7 +9,7 @@ import ruleExample from '../examples/individualRuleExample';
 const demo = function() {
     function init() {
         ruleExample(formValidation, {
-            rules: [required],
+            rules: [required({events: ['submit']})],
             formSelector: '.js-example-form-1'
         });
 

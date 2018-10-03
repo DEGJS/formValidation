@@ -1,5 +1,5 @@
-this['rule-demos-bundle'] = this['rule-demos-bundle'] || {};
-this['rule-demos-bundle'].js = (function () {
+this['custom-rule-bundle'] = this['custom-rule-bundle'] || {};
+this['custom-rule-bundle'].js = (function () {
   'use strict';
 
   function _typeof(obj) {
@@ -14,40 +14,6 @@ this['rule-demos-bundle'].js = (function () {
     }
 
     return _typeof(obj);
-  }
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _objectSpread(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-      var ownKeys = Object.keys(source);
-
-      if (typeof Object.getOwnPropertySymbols === 'function') {
-        ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
-          return Object.getOwnPropertyDescriptor(source, sym).enumerable;
-        }));
-      }
-
-      ownKeys.forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    }
-
-    return target;
   }
 
   /*!
@@ -665,231 +631,81 @@ this['rule-demos-bundle'].js = (function () {
     };
   };
 
-  var email = function email(options) {
+  // Config
+  var cityCheck = function cityCheck() {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var defaults = {
-      message: 'Please enter a valid email address.',
-      messageAttr: 'data-validation-email-message',
-      pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+      message: 'That is not the best city in the world.',
+      messageAttr: 'data-validation-city-message',
       events: ['focusout', 'submit']
     };
     var settings = Object.assign({}, defaults, options);
-
-    var getSettings = function getSettings() {
-      return settings;
-    };
-
-    var isRelevant = function isRelevant(field) {
-      return field.inputEls.some(function (el) {
-        return el.getAttribute('type') === 'email';
-      });
-    };
-
-    var validate = function validate(field) {
-      return new Promise(function (resolve, reject) {
-        if (field.inputEls) {
-          resolve({
-            valid: field.inputEls.some(function (el) {
-              return el.value.length === 0 || el.value.length > 0 && settings.pattern.test(el.value);
-            })
-          });
-        } else {
-          reject('email: No inputs set.');
-        }
-      });
-    };
-
-    var postprocessMessage = function postprocessMessage(msg) {
-      if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
-        return settings.postprocessMessage(msg);
-      } else {
-        return msg;
-      }
-    };
-
-    return {
-      settings: getSettings(),
-      isRelevant: isRelevant,
-      validate: validate,
-      postprocessMessage: postprocessMessage
-    };
-  };
-
-  var pattern = function pattern(options) {
-    var defaults = {
-      message: 'Please match the field format.',
-      messageAttr: 'data-validation-pattern-message',
-      events: ['focusout', 'submit']
-    };
-    var settings = Object.assign({}, defaults, options);
-
-    var getSettings = function getSettings() {
-      return settings;
-    };
-
-    var isRelevant = function isRelevant(field) {
-      return field.inputEls.some(function (el) {
-        return el.getAttribute('pattern') !== null;
-      });
-    };
-
-    var validate = function validate(field) {
-      return new Promise(function (resolve, reject) {
-        if (field.inputEls) {
-          resolve({
-            valid: field.inputEls.some(function (el) {
-              var pattern = new RegExp(el.getAttribute('pattern'));
-              return el.value.length === 0 || el.value.length > 0 && pattern.test(el.value);
-            })
-          });
-        } else {
-          reject('pattern: No inputs set.');
-        }
-      });
-    };
-
-    var postprocessMessage = function postprocessMessage(msg) {
-      if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
-        return settings.postprocessMessage(msg);
-      } else {
-        return msg;
-      }
-    };
-
-    return {
-      settings: getSettings(),
-      isRelevant: isRelevant,
-      validate: validate,
-      postprocessMessage: postprocessMessage
-    };
-  };
-
-  var minMaxLength = function minMaxLength(options) {
-    var defaults = {
-      message: 'Please enter a value between [minToken] and [maxToken] characters.',
-      messageAttr: 'data-validation-minmaxlength-message',
-      minAttr: 'data-minlength',
-      maxAttr: 'maxlength',
-      minToken: '[minToken]',
-      maxToken: '[maxToken]',
-      events: ['focusout', 'submit']
-    };
-
-    var settings = _objectSpread({}, defaults, options);
 
     function getSettings() {
       return settings;
     }
 
     function isRelevant(field) {
-      return field.inputEls.some(function (el) {
-        return el.getAttribute(settings.minAttr) !== null || el.getAttribute(settings.maxAttr) !== null;
+      return field.inputEls.some(function (inputEl) {
+        return inputEl.getAttribute('data-validation-city-check') !== null;
+      });
+    }
+
+    function checkCity(cityName) {
+      return new Promise(function (resolve, reject) {
+        if (cityName.length === 0) {
+          resolve();
+        } else {
+          return setTimeout(function () {
+            resolve(cityName === 'St. Louis');
+          }, 500);
+        }
       });
     }
 
     function validate(field) {
       return new Promise(function (resolve, reject) {
         if (field.inputEls) {
-          resolve({
-            valid: field.inputEls.some(function (el) {
-              return el.value.length === 0 || meetsMin(el) && meetsMax(el);
-            })
+          var promises = field.inputEls.map(function (el) {
+            return checkCity(el.value);
+          });
+          Promise.all(promises).then(function (responses) {
+            console.log(responses.every(function (resp) {
+              return resp;
+            }));
+            resolve({
+              valid: responses.every(function (resp) {
+                return resp;
+              })
+            });
+          }).catch(function (e) {
+            resolve({
+              valid: false
+            });
           });
         } else {
-          reject('minMaxLength: No inputs set.');
+          reject('cityCheck: No inputs set.');
         }
       });
-    }
-
-    function meetsMin(el) {
-      var minVal = el.getAttribute(settings.minAttr);
-      return minVal === null ? true : el.value.length >= parseInt(minVal);
-    }
-
-    function meetsMax(el) {
-      var maxVal = el.getAttribute(settings.maxAttr);
-      return maxVal === null ? true : el.value.length <= parseInt(maxVal);
-    }
-
-    function getMinMaxValues(field) {
-      var minVal = settings.minToken;
-      var maxVal = settings.maxToken;
-
-      if (field.inputEls) {
-        var invalidEls = field.inputEls.filter(function (el) {
-          return !meetsMin(el) || !meetsMax(el);
-        });
-
-        if (invalidEls.length) {
-          minVal = invalidEls[0].getAttribute(settings.minAttr);
-          maxVal = invalidEls[0].getAttribute(settings.maxAttr);
-        }
-      }
-
-      return {
-        minVal: minVal,
-        maxVal: maxVal
-      };
-    }
-
-    function postprocessMessage(msg) {
-      var field = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      if (settings.postprocessMessage && typeof settings.postprocessMessage === 'function') {
-        return settings.postprocessMessage(msg, settings, field);
-      }
-
-      var _getMinMaxValues = getMinMaxValues(field),
-          minVal = _getMinMaxValues.minVal,
-          maxVal = _getMinMaxValues.maxVal;
-
-      msg = msg.replace(settings.minToken, minVal);
-      msg = msg.replace(settings.maxToken, maxVal);
-      return msg;
     }
 
     return {
       settings: getSettings(),
       isRelevant: isRelevant,
-      validate: validate,
-      postprocessMessage: postprocessMessage
+      validate: validate
     };
   };
 
-  var individualRuleExample = function individualRuleExample(formValidation, opts) {
-    var validationOpts = {
-      rules: opts.rules
+  var customRule = function customRule() {
+    var formValidationOpts = {
+      rules: [required, cityCheck]
     };
-    var formEl = document.querySelector(opts.formSelector);
-    var validationInst = formValidation(formEl, validationOpts);
+    var formEl = document.querySelector('.js-custom-rule-form');
+    formValidation(formEl, formValidationOpts);
   };
 
-  var demo = function demo() {
-    function init() {
-      individualRuleExample(formValidation, {
-        rules: [required({
-          events: ['submit']
-        })],
-        formSelector: '.js-example-form-1'
-      });
-      individualRuleExample(formValidation, {
-        rules: [email],
-        formSelector: '.js-example-form-2'
-      });
-      individualRuleExample(formValidation, {
-        rules: [pattern],
-        formSelector: '.js-example-form-3'
-      });
-      individualRuleExample(formValidation, {
-        rules: [minMaxLength],
-        formSelector: '.js-example-form-4'
-      });
-    }
+  var customRule$1 = customRule();
 
-    init();
-  };
-
-  var ruleDemos = demo();
-
-  return ruleDemos;
+  return customRule$1;
 
 }());

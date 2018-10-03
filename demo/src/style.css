@@ -323,6 +323,10 @@ pre[class*=language-] {
 }
 
 /* Form styles */
+.form--centered {
+    text-align: center;
+}
+
 .field {
     align-items: center;
     display: flex;
@@ -369,6 +373,7 @@ pre[class*=language-] {
 
 .nav-bar__item {
     padding: .75em;
+    text-align: center;
 }
 
 .nav-bar__item--active {
