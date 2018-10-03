@@ -189,14 +189,14 @@ describe("renderers", () => {
 			});
 		});
 
-		it("should call processMessage, if defined", () => {
+		it("should call postprocessMessage, if defined", () => {
             const mockArgs = {
                 rule: {
                     settings: {
                         messageAttr: "data-mock-attr",
                         message: ""
                     },
-                    processMessage: jest.fn(() => {})
+                    postprocessMessage: jest.fn(() => {})
                 },
                 field: {
                     fieldEl: {
@@ -214,7 +214,7 @@ describe("renderers", () => {
             };
 
             renderValidationMessage(mockArgs, mockSettings);
-            expect(mockArgs.rule.processMessage).toHaveBeenCalled();
+            expect(mockArgs.rule.postprocessMessage).toHaveBeenCalled();
         });
 	});
 });
