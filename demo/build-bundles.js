@@ -4,7 +4,7 @@ const commonJs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 
 const buildBundles = async function() {
-    // at path src/js/components/
+    // at path demo/src/js/components/
     const entryPoints = [
         'rule-demos',
         'example-form',
@@ -22,7 +22,7 @@ const buildBundles = async function() {
 
 const bundle = async function(entryName) {
     const inputOpts = {
-        input: `src/js/components/${entryName}.js`,
+        input: `demo/src/js/components/${entryName}.js`,
         plugins: [
             resolve(),
             commonJs(),
@@ -30,7 +30,7 @@ const bundle = async function(entryName) {
         ]
     };
     const outputOpts = {
-        file: `src/js/${entryName}-bundle.js`,
+        file: `demo/dist/js/${entryName}-bundle.js`,
         format: 'iife',
         name: `${entryName}-bundle.js`
     };
