@@ -1,4 +1,4 @@
-import formValidation from '@degjs/form-validation';
+import formValidation from '../../../../src/formValidation';
 import required from '@degjs/form-validation-required';
 
 import ruleExample from '../examples/individualRuleExample';
