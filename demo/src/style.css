@@ -1,7 +1,8 @@
 @import"https://fonts.googleapis.com/css?family=Arimo:400,700";
 
 html {
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 html,
@@ -192,6 +193,8 @@ body {
     text-transform: uppercase;
     display: inline-block;
     cursor: pointer;
+    -webkit-transition: background-color .25s ease-out;
+    -o-transition: background-color .25s ease-out;
     transition: background-color .25s ease-out
 }
 
@@ -225,13 +228,18 @@ body {
 @media(min-width:48em) {
     .example {
         display: -ms-flexbox;
+        display: -webkit-box;
         display: flex;
         -ms-flex-flow: row wrap;
-        flex-flow: row wrap;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+                flex-flow: row wrap;
         -ms-flex-align: center;
-        align-items: center;
+        -webkit-box-align: center;
+                align-items: center;
         -ms-flex-pack: justify;
-        justify-content: space-between
+        -webkit-box-pack: justify;
+                justify-content: space-between
     }
 
     .example__heading {
@@ -275,7 +283,8 @@ pre[class*=language-] {
     word-wrap: normal;
     line-height: 1.5;
     -moz-tab-size: 4;
-    tab-size: 4;
+    -o-tab-size: 4;
+       tab-size: 4;
     -webkit-hyphens: none;
     -ms-hyphens: none;
     hyphens: none
@@ -340,14 +349,23 @@ strong {
 }
 
 .field {
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin: .5em 0;
 }
 
 .field--left {
-    align-items: start;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: start;
 }
 
 .field--error-inline .input,
@@ -379,8 +397,12 @@ strong {
 
 /* nav bar styles */
 .nav-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
 }
 
 .nav-bar__item {
@@ -410,8 +432,13 @@ strong {
 /* columns */
 
 .columns {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
 }
 
 .columns--two .column {
