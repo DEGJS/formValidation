@@ -326,6 +326,10 @@ strong {
     font-weight: bold;
 }
 
+.language-js--max-height {
+    max-height: 30em;
+}
+
 .text--blue {
     color: #0080C7;
 }

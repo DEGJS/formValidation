@@ -9,7 +9,8 @@ const buildBundles = async function() {
         'rule-demos',
         'example-form',
         'custom-rule',
-        'cascading-errors'
+        'cascading-errors',
+        'add-remove-validation'
     ];
 
     const bundlePromises = entryPoints.map(bundle);
