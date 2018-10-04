@@ -5,7 +5,8 @@ cache:
   directories:
   - node_modules
 before_deploy:
-  - if ! [ "$BEFORE_DEPLOY_RUN" ]; then
+  - >
+    if ! [ "$BEFORE_DEPLOY_RUN" ]; then
       export BEFORE_DEPLOY_RUN=1;
       npm run-script build-demo
     fi
@@ -16,10 +17,10 @@ deploy:
     keep-history: true
     local-dir: demo/dist
   - provider: npm
-  email: scheul93@gmail.com
-  api_key:
-    secure: mBgpC0LcEUQ1YQiZWJv28C2GZIMkoWpRjr2x8rRwqQbiqElwwdp3651i9+z5bTMz6BM55Hx7mP4vGjUdHQQwas9fqoiCqJVMgZvnnzOSIMaGFgS3Pz12VGP47dOVM7XvKPUZKk+WJFxB3zjjkg2c9nNrPCUOoqs9ZSf5fRbz6TxWvGS3fby/uKjYKK6vxkgxsoO1hBVnb7nFCDgycFD53oM+eNtITkz2Lsmhgu3rhOWQ/Nf5ix9s4GPUUPAiNg6YeoPemid+KwRduVcr9b1iQ8dj9+ISoyqcJsV/J4wxoR9OMrP08/zl4fBmC3bO8Q6TIvhSax0AgNrXC9yMFHxnUcuLwv1sv+SD9tV6IWttugvA+z4Pp8VHHDWkZjR9gpRmSWUPQIyzZJWv8wIxJ9IU9JBYIwCDkNRycyl1X+lil2ozJKyjsW5NDoTuSF+7zc4hY1IdfOv9a+nKXZVTxUzuoUIIL4eH2dr+63xEUtw9QRufS+HtobXZQNm4GMW+DnXC90MxVOktGDfv5uYo1/i+h0Zf7LRQWvA1A3nV3BDkqWF/BmSBbTQ7bNICzQ79Mr+qYfCBbrbaS3OkodFWSpOOHTZlJZS0X4yzB4xslO2g3vsnkm1xsBG+FxS2qyuUM69wDvnHEp6akEdtzaBVYNjjNw3F2ZwD8NsuN5cErmj4tiU=
-  on:
-    tags: true
-    branch: master
-    repo: DEGJS/formValidation
+    email: scheul93@gmail.com
+    api_key:
+      secure: mBgpC0LcEUQ1YQiZWJv28C2GZIMkoWpRjr2x8rRwqQbiqElwwdp3651i9+z5bTMz6BM55Hx7mP4vGjUdHQQwas9fqoiCqJVMgZvnnzOSIMaGFgS3Pz12VGP47dOVM7XvKPUZKk+WJFxB3zjjkg2c9nNrPCUOoqs9ZSf5fRbz6TxWvGS3fby/uKjYKK6vxkgxsoO1hBVnb7nFCDgycFD53oM+eNtITkz2Lsmhgu3rhOWQ/Nf5ix9s4GPUUPAiNg6YeoPemid+KwRduVcr9b1iQ8dj9+ISoyqcJsV/J4wxoR9OMrP08/zl4fBmC3bO8Q6TIvhSax0AgNrXC9yMFHxnUcuLwv1sv+SD9tV6IWttugvA+z4Pp8VHHDWkZjR9gpRmSWUPQIyzZJWv8wIxJ9IU9JBYIwCDkNRycyl1X+lil2ozJKyjsW5NDoTuSF+7zc4hY1IdfOv9a+nKXZVTxUzuoUIIL4eH2dr+63xEUtw9QRufS+HtobXZQNm4GMW+DnXC90MxVOktGDfv5uYo1/i+h0Zf7LRQWvA1A3nV3BDkqWF/BmSBbTQ7bNICzQ79Mr+qYfCBbrbaS3OkodFWSpOOHTZlJZS0X4yzB4xslO2g3vsnkm1xsBG+FxS2qyuUM69wDvnHEp6akEdtzaBVYNjjNw3F2ZwD8NsuN5cErmj4tiU=
+    on:
+      tags: true
+      branch: master
+      repo: DEGJS/formValidation
