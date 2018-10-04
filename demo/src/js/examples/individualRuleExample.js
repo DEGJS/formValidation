@@ -1,5 +1,6 @@
 const individualRuleExample = function(formValidation, opts) {
     const validationOpts = {
+        defaultErrorMessage: opts.defaultErrorMessage,
         rules: opts.rules
     };
 

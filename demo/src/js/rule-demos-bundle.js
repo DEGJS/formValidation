@@ -857,6 +857,7 @@ this['rule-demos-bundle'].js = (function () {
 
   var individualRuleExample = function individualRuleExample(formValidation, opts) {
     var validationOpts = {
+      defaultErrorMessage: opts.defaultErrorMessage,
       rules: opts.rules
     };
     var formEl = document.querySelector(opts.formSelector);

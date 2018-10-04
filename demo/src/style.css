@@ -322,6 +322,14 @@ pre[class*=language-] {
     white-space: normal
 }
 
+strong {
+    font-weight: bold;
+}
+
+.text--blue {
+    color: #0080C7;
+}
+
 /* Form styles */
 .form--centered {
     text-align: center;

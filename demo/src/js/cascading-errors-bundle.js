@@ -1,5 +1,5 @@
-this['custom-rule-bundle'] = this['custom-rule-bundle'] || {};
-this['custom-rule-bundle'].js = (function () {
+this['cascading-errors-bundle'] = this['cascading-errors-bundle'] || {};
+this['cascading-errors-bundle'].js = (function () {
   'use strict';
 
   function _typeof(obj) {
@@ -631,83 +631,47 @@ this['custom-rule-bundle'].js = (function () {
     };
   };
 
-  // Config
-  var cityCheck = function cityCheck() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var defaults = {
-      message: 'That is not the best city in the world.',
-      messageAttr: 'data-validation-city-message',
-      events: ['focusout', 'submit']
+  var individualRuleExample = function individualRuleExample(formValidation, opts) {
+    var validationOpts = {
+      defaultErrorMessage: opts.defaultErrorMessage,
+      rules: opts.rules
     };
-    var settings = Object.assign({}, defaults, options);
-
-    function getSettings() {
-      return settings;
-    }
-
-    function isRelevant(field) {
-      return field.inputEls.some(function (inputEl) {
-        return inputEl.getAttribute('data-validation-city-check') !== null;
-      });
-    }
-
-    function checkCity(cityName) {
-      return new Promise(function (resolve, reject) {
-        if (cityName.length === 0) {
-          resolve();
-        } else {
-          return setTimeout(function () {
-            resolve(cityName === 'St. Louis');
-          }, 500);
-        }
-      });
-    }
-
-    function validate(field) {
-      return new Promise(function (resolve, reject) {
-        if (field.inputEls) {
-          var promises = field.inputEls.map(function (el) {
-            return checkCity(el.value);
-          });
-          Promise.all(promises).then(function (responses) {
-            console.log(responses.every(function (resp) {
-              return resp;
-            }));
-            resolve({
-              valid: responses.every(function (resp) {
-                return resp;
-              })
-            });
-          }).catch(function (e) {
-            resolve({
-              valid: false
-            });
-          });
-        } else {
-          reject('cityCheck: No inputs set.');
-        }
-      });
-    }
-
-    return {
-      settings: getSettings(),
-      isRelevant: isRelevant,
-      validate: validate
-    };
+    var formEl = document.querySelector(opts.formSelector);
+    var validationInst = formValidation(formEl, validationOpts);
   };
 
-  var customRule = function customRule() {
-    var formValidationOpts = {
-      rules: [required, cityCheck({
-        message: 'That is not the greatest city in the world. Think "Gateway to the West"'
-      })]
-    };
-    var formEl = document.querySelector('.js-custom-rule-form');
-    formValidation(formEl, formValidationOpts);
+  var cascadingErrors = function cascadingErrors() {
+    individualRuleExample(formValidation, {
+      rules: [required({
+        events: ['submit']
+      })],
+      formSelector: '.js-example-form-1'
+    });
+    individualRuleExample(formValidation, {
+      rules: [required({
+        events: ['submit']
+      })],
+      formSelector: '.js-example-form-2'
+    });
+    individualRuleExample(formValidation, {
+      rules: [required({
+        message: "I'm an error message on the rule.",
+        events: ['submit']
+      })],
+      formSelector: '.js-example-form-3'
+    });
+    individualRuleExample(formValidation, {
+      defaultErrorMessage: "I'm an error defined in formValidation settings.",
+      rules: [required({
+        message: '',
+        events: ['submit']
+      })],
+      formSelector: '.js-example-form-4'
+    });
   };
 
-  var customRule$1 = customRule();
+  var cascadingErrors$1 = cascadingErrors();
 
-  return customRule$1;
+  return cascadingErrors$1;
 
 }());

@@ -8,7 +8,8 @@ const buildBundles = async function() {
     const entryPoints = [
         'rule-demos',
         'example-form',
-        'custom-rule'
+        'custom-rule',
+        'cascading-errors'
     ];
 
     const bundlePromises = entryPoints.map(bundle);
