@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+    <head>
+        <title>formValidation Demo</title>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" href="../style.css">
+    </head>
+
+    <body>
+        <header class="site-header">
+            <div class="page-width-wrap">
+                <h1>DEGJS formValidation</h1>
+                <ul class="nav-bar">
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="../index.html">Example Form</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./degjsRules.html">DEGJS formValidaton Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./customRule.html">Custom Rules</a>
+                    </li>
+                    <li class="nav-bar__item nav-bar__item--active">
+                        <a class="nav-bar__link" href="./errorCascading.html">Error Cascading</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./addRemoveFields.html">Add/Remove Fields</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main class="main">
+            <div class="page-width-wrap">
+                <h2>Cascading Errors</h2>
+                <p>
+                    FormValidation uses a system of cascading error message. Meaning that you can defined a rule's error message in four different places. 
+                    If an error message is empty or undefined, formValidation will go up the chain until it finds a value.
+                    <br /><br/>
+                    Order of precedence for error messages is:
+                    <ol>
+                        <li>
+                            <strong>1. Message defined on the field element. </strong>
+                            <br/>&nbsp;&nbsp;&nbsp;
+                            The name of the data attribute on the field element is defined in a rule's settings as the "messageAttr" property.
+                        </li>
+                        <li>
+                            <strong>2. Message defined on the form element. </strong>
+                            <br/>&nbsp;&nbsp;&nbsp;The name of the data attribute on the form element is defined in a rule's settings as the "messageAttr" property.
+                        </li>
+                        <li>
+                            <strong>3. Message defined in the rule's settings. </strong>
+                            <br/>&nbsp;&nbsp;&nbsp;
+                            Each rule should have a property in its settings called "message".
+                        </li>
+                        <li>
+                            <strong>4. Message defined in formValidation's settings. </strong>
+                            <br/>&nbsp;&nbsp;&nbsp;
+                            The formValidation module has a setting property called "defaultErrorMessage" that should be used as a fallback.
+                        </li>
+                    </ol>
+                </p>
+                <hr />
+
+                <div class="example">
+                    <h2 class="example__heading">Error On Field</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import required from '@degjs/form-validation-required';
+
+/* configure required rule to be used */
+/* error is defined on field */
+const validationOpts = {
+    rules: [
+        required({
+            events: ['submit']
+        });
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-1');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-1">
+                        <p class="text--blue">Press the 'Submit' button </p>
+                        <form class="form js-example-form-1">
+                            <div class="field js-validation-field" data-validation-required-message="I'm an error message on the field.">
+                                <label class="label" for="firstName">First Name</label>
+                                <input class="input" type="text" required="true" id="firstName" name="firstName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h2 class="example__heading">Error On Form</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import required from '@degjs/form-validation-required';
+
+/* configure required rule to be used */
+/* error is defined on form */
+const validationOpts = {
+    rules: [
+        required({
+            events: ['submit']
+        });
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-2');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-2">
+                        <p class="text--blue">Press the 'Submit' button </p>
+                        <form class="form js-example-form-2" data-validation-required-message="I'm an error message on the form.">
+                            <div class="field js-validation-field" >
+                                <label class="label" for="firstName">First Name</label>
+                                <input class="input" type="text" required="true" id="firstName" name="firstName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h2 class="example__heading">Error In Rule</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import required from '@degjs/form-validation-required';
+
+/* configure required rule to be used */
+/* error is defined on rule */
+const validationOpts = {
+    rules: [
+        required({
+            message: "I'm an error message on the rule.",
+            events: ['submit']
+        });
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-3');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-3">
+                        <p class="text--blue">Press the 'Submit' button </p>
+                        <form class="form js-example-form-3">
+                            <div class="field js-validation-field" >
+                                <label class="label" for="firstName">First Name</label>
+                                <input class="input" type="text" required="true" id="firstName" name="firstName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h2 class="example__heading">Error In FormValidation</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import required from '@degjs/form-validation-required';
+
+/* configure required rule to be used */
+/* 
+    error is defined on formValidation
+    formValidation DOES have a default error message, this is overriding that to show it can be done
+*/
+const validationOpts = {
+    defaultErrorMessage: "I'm an error defined in formValidation settings.",
+    rules: [
+        required({
+            message: '',
+            events: ['submit']
+        });
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-4');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-4">
+                        <p class="text--blue">Press the 'Submit' button </p>
+                        <form class="form js-example-form-4">
+                            <div class="field js-validation-field" >
+                                <label class="label" for="firstName">First Name</label>
+                                <input class="input" type="text" required="true" id="firstName" name="firstName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <script src="../js/cascading-errors-bundle.js"></script>
+    </body>
+</html>

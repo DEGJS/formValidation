@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+    <head>
+        <title>formValidation Demo</title>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" href="../style.css">
+    </head>
+
+    <body>
+        <header class="site-header">
+			<div class="page-width-wrap">
+                <h1>DEGJS formValidation</h1>
+                <ul class="nav-bar">
+                    <li class="nav-bar__item ">
+                        <a class="nav-bar__link" href="../index.html">Example Form</a>
+                    </li>
+                    <li class="nav-bar__item nav-bar__item--active">
+                        <a class="nav-bar__link" href="./degjsRules.html">DEGJS formValidaton Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./customRule.html">Custom Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./errorCascading.html">Error Cascading</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./addRemoveFields.html">Add/Remove Fields</a>
+                    </li>
+                </ul>
+			</div>
+        </header>
+        <main class="main">
+            <div class="page-width-wrap">
+                <div class="example">
+                    <h2 class="example__heading">formValidation with required rule</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import required from '@degjs/form-validation-required';
+
+/* configure required rule to be used */
+const validationOpts = {
+    rules: [
+        required({
+            events: ['submit']
+        })
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-1');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-1">
+                        <form class="form js-example-form-1">
+                            <div class="field js-validation-field">
+                                <label class="label" for="firstName">First Name</label>
+                                <input class="input" type="text" required="true" id="firstName" name="firstName" />
+                            </div>
+                            <div class="field js-validation-field">
+                                <label class="label" for="middleName">Middle Name</label>
+                                <input class="input" type="text" id="middleName" name="middleName" />
+                            </div>
+                            <div class="field js-validation-field">
+                                <label class="label" for="lastName">Last Name</label>
+                                <input class="input" type="text" required id="lastName" name="lastName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h2 class="example__heading">formValidation with email rule</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import email from '@degjs/form-validation-email';
+
+/* configure email rule to be used */
+const validationOpts = {
+    rules: [
+        email
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-2');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-2">
+                        <form class="form js-example-form-2">
+                            <div class="field js-validation-field">
+                                <label class="label" for="email">Email</label>
+                                <input class="input" type="email" id="email" name="email" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h2 class="example__heading">formValidation with pattern rule</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import pattern from '@degjs/form-validation-pattern';
+
+/* configure pattern rule to be used */
+const validationOpts = {
+    rules: [
+        pattern
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-3');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-3">
+                        <form class="form js-example-form-3">
+                            <div class="field js-validation-field">
+                                <label class="label label--left" for="codeName">Enter Letters and Numbers</label>
+                                <input class="input input--wide" type="text" pattern="/[A-Za-z0-9]+/" id="codeName" name="codeName" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h2 class="example__heading">formValidation with minMaxLength rule</h2>
+                    <div class="code-wrap example__code-wrap">
+                        <pre class="language-js">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import minMaxLength from '@degjs/form-validation-min-max-length';
+
+/* configure minMaxLength rule to be used */
+const validationOpts = {
+    rules: [
+        minMaxLength
+    ]
+};
+
+const formEl = document.querySelector('.js-example-form-4');
+const validationInst = formValidation(formEl, validationOpts);
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-4">
+                        <form class="form js-example-form-4">
+                            <div class="field js-validation-field">
+                                <label class="label label--left" for="minTest">Enter Word with at least 5 letters</label>
+                                <input class="input input--wide" type="text" id="minTest" name="minTest" data-minlength="5" />
+                            </div>
+                            <div class="field js-validation-field">
+                                <label class="label label--left" for="maxTest">Enter Word with less than 10 letters</label>
+                                <input class="input input--wide" type="text" id="maxTest" name="maxTest" maxlength="10" />
+                            </div>
+                            <div class="field js-validation-field">
+                                <label class="label label--left" for="minMaxTest">Enter word with between 5 and 10 letters</label>
+                                <input class="input input--wide" type="text" id="minMaxTest" name="minMaxTest" data-minlength="5" maxlength="10" />
+                            </div>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="../js/rule-demos-bundle.js"></script>
+    </body>
+</html>

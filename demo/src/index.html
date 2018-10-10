@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+    <head>
+        <title>formValidation Demo</title>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+        <header class="site-header">
+			<div class="page-width-wrap">
+                <h1>DEGJS formValidation</h1>
+                <ul class="nav-bar">
+                    <li class="nav-bar__item nav-bar__item--active">
+                        <a class="nav-bar__link" href="index.html">Example Form</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./pages/degjsRules.html">DEGJS formValidaton Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./pages/customRule.html">Custom Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./pages/errorCascading.html">Error Cascading</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./pages/addRemoveFields.html">Add/Remove Fields</a>
+                    </li>
+                </ul>
+			</div>
+        </header>
+        <main class="main">
+            <div class="page-width-wrap">
+                <h2 class="example__heading">Example Form Using formValidation</h2>
+                <form class="js-example-form">
+                    <div class="columns columns--two">
+                        <div class="column">
+                            <div class="field field--left field--error-inline js-validation-field">
+                                <label class="label" for="firstName">First Name</label>
+                                <div>
+                                    <input class="input" type="text" required="true" id="firstName" name="firstName" />
+                                    <div class="validation-field__errors"></div>
+                                </div>
+                            </div>
+                            <div class="field field--left field--error-inline js-validation-field">
+                                <label class="label" for="middleName">Middle Name</label>
+                                <div>
+                                    <input class="input" type="text" id="middleName" name="middleName" />
+                                    <div class="validation-field__errors"></div>
+                                </div>
+                            </div>
+                            <div class="field field--left field--error-inline js-validation-field">
+                                <label class="label" for="lastName">Last Name</label>
+                                <div>
+                                    <input class="input" type="text" required="true" id="lastName" name="lastName" />
+                                    <div class="validation-field__errors"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="field field--left field--error-inline js-validation-field">
+                                <label class="label" for="email">Email</label>
+                                <div>
+                                    <input class="input" type="email" required="true" id="email" name="email" />
+                                    <div class="validation-field__errors"></div>
+                                </div>
+                            </div>
+                            <div class="field field--left field--error-inline js-validation-field">
+                                <label class="label" for="username">Username</label>
+                                <div>
+                                    <input class="input" 
+                                        type="text" 
+                                        id="username" 
+                                        name="username" 
+                                        maxlength="15" 
+                                        data-minlength="5" 
+                                        pattern="^[A-Za-z0-9]+$"
+                                        data-validation-pattern-message="Username can only contain letters and numbers."
+                                    />
+                                    <div class="validation-field__errors"></div>
+                                </div>
+                            </div>
+                            <div class="field field--left field--error-inline js-validation-field" data-validation-required-message="Please select at least one.">
+                                <fieldset>
+                                    <legend>Interests</legend>
+                                    <ul>
+                                        <li>
+                                            <input class="input" type="checkbox" required="true" id="interest-1" name="interests" value="sports" />
+                                            <label class="label" for="interest-1">Sports</label>
+                                        </li>
+                                        <li>
+                                            <input class="input" type="checkbox" required="true" id="interest-2" name="interests" value="reading" />
+                                            <label class="label" for="interest-2">Reading</label>
+                                        </li>
+                                        <li>
+                                            <input class="input" type="checkbox" required="true" id="interest-3" name="interests" value="watching tv" />
+                                            <label class="label" for="interest-3">Watching TV</label>
+                                        </li>
+                                    </ul>
+                                </fieldset>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <button type="submit" class="button">Submit</button>
+                </form>
+            </div>
+        </main>
+
+        <script src="js/example-form-bundle.js"></script>
+    </body>
+</html>

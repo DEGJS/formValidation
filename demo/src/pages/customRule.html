@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+    <head>
+        <title>formValidation Demo</title>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" href="../style.css">
+    </head>
+
+    <body>
+        <header class="site-header">
+            <div class="page-width-wrap">
+                <h1>DEGJS formValidation</h1>
+                <ul class="nav-bar">
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="../index.html">Example Form</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./degjsRules.html">DEGJS formValidaton Rules</a>
+                    </li>
+                    <li class="nav-bar__item nav-bar__item--active">
+                        <a class="nav-bar__link" href="./customRule.html">Custom Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./errorCascading.html">Error Cascading</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./addRemoveFields.html">Add/Remove Fields</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main class="main">
+            <div class="page-width-wrap">
+                <h2>Writing a Custom Rule</h2>
+                <p>
+                    FormValidation allows the programmer to customize their validation by 
+                    <a href="https://github.com/DEGJS/formValidation#writing-your-own-rule">writing their own rules</a>.
+                    <br /><br />
+                    This example demonstrates a custom rule that calls an api (or a setTimeout to mock an api call) to check whether the inputted city is the "greatest".
+                    The code for the custom rule can be found <a href="https://github.com/DEGJS/formValidation/blob/master/demo/src/js/examples/cityCheckRule.js">here</a>.
+                </p>
+
+                <br /><br />
+                <form class="form form--centered js-custom-rule-form">
+                    <div class="field js-validation-field">
+                        <label class="label" for="city">Which city is the greatest in the world?</label>
+                        <input class="input" type="text" required="true" id="city" name="city" data-validation-city-check="true"/>
+                    </div>
+                    <button type="submit">Check</button>
+                </form>
+            </div>
+        </main>
+
+        <script src="../js/custom-rule-bundle.js"></script>
+    </body>
+</html>

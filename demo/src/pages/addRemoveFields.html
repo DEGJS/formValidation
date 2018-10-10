@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+    <head>
+        <title>formValidation Demo</title>
+        <meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="../favicon.ico">
+		<link rel="stylesheet" href="../style.css">
+    </head>
+
+    <body>
+        <header class="site-header">
+            <div class="page-width-wrap">
+                <h1>DEGJS formValidation</h1>
+                <ul class="nav-bar">
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="../index.html">Example Form</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./degjsRules.html">DEGJS formValidaton Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./customRule.html">Custom Rules</a>
+                    </li>
+                    <li class="nav-bar__item">
+                        <a class="nav-bar__link" href="./errorCascading.html">Error Cascading</a>
+                    </li>
+                    <li class="nav-bar__item nav-bar__item--active">
+                        <a class="nav-bar__link" href="./addRemoveFields.html">Add/Remove Fields</a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main class="main">
+            <div class="page-width-wrap">
+                <h2>Adding and Removing Fields</h2>
+                <p>
+                    FormValidation provides the ability to add and remove field from the validation instance on the fly.
+                </p>
+                <br />
+                <div class="example">
+                    <div class="code-wrap example__code-wrap">
+                        <p>
+                            This example uses <a href="https://github.com/DEGJS/formFieldAppender">DEGJS FormFieldAppender</a>.
+                        </p>
+                        <pre class="language-js language-js--max-height">
+                            <code class="code">
+import formValidation from '@degjs/form-validation';
+import required from '@degjs/form-validation-required';
+import email from '@degjs/form-validation-email';
+import formFieldAppender from '@degjs/form-field-appender';
+
+const addRemoveValidation = function() {
+    const formEl = document.querySelector('.js-example-form-1');
+    const fieldsetEl = formEl.querySelector('.js-example-fieldset');
+
+    const formValidationInst = formValidation(formEl, {
+        rules: [
+            email,
+            required({
+                events: ['submit']
+            })
+        ]
+    });
+    
+    formFieldAppender(fieldsetEl, {
+        firstItemIsRemovable: false,
+        onItemAddCallback: addValidation,
+        onItemRemoveCallback: removeValidation
+    });
+
+    function addValidation(newFieldWrapper) {
+        formValidationInst.addFields([newFieldWrapper]);
+    }
+
+    function removeValidation(removedFieldWrapper) {
+        formValidationInst.removeFields([removedFieldWrapper]);
+    }
+}
+
+export default addRemoveValidation();
+                            </code>
+                        </pre>
+                    </div>
+                    <div class="example__interface js-example-1">
+                        <!-- <p class="text--blue">Press the 'Submit' button </p> -->
+                        <form class="form js-example-form-1">
+                            <fieldset class="js-example-fieldset">
+                                <div class="js-ffa-item">
+                                    <div class="field js-validation-field">
+                                        <label for="email">Email Address</label>
+                                        <input name="email" id="email1" type="email" required />
+                                    </div>
+                                    <button class="js-ffa-add-trigger" aria-disabled="false">Add</button>
+                                    <button class="js-ffa-remove-trigger">Remove</button>
+                                </div>
+                            </fieldset>
+                            <br/>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script src="../js/add-remove-validation-bundle.js"></script>
+    </body>
+</html>
