@@ -48,7 +48,7 @@ const formValidation = (formEl, options = {}) => {
 	}
 
 	const registerFields = fieldEls => {
-		ensureArray(fieldEls);
+		fieldEls = ensureArray(fieldEls);
 		fieldEls.forEach(fieldEl => {
 			const inputEls = Array.from(fieldEl.querySelectorAll(settings.inputsSelector));
 			const id = getUniqueId(fieldEl, settings);
@@ -190,6 +190,7 @@ const formValidation = (formEl, options = {}) => {
 		elOrIdArr.forEach(elOrId => {
 			let id = elOrId;
 			if (isElement(elOrId)) {
+				elOrId.classList.remove(settings.hasErrorsClass);
 				const elErrorWrapper = elOrId.querySelector('.' + settings.errorsClass);
 				if (elErrorWrapper) {
 					emptyElements(elErrorWrapper);

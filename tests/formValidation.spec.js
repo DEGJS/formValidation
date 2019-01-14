@@ -119,6 +119,9 @@ describe('formValidation', () => {
             const id = 'id1';
             const mockEl = {
                 type: 'element',
+                classList: {
+                    remove: jest.fn()
+                },
                 querySelector: () => null,
                 getAttribute: () => id
             };
@@ -139,7 +142,10 @@ describe('formValidation', () => {
             const mockEl = {
                 type: 'element',
                 querySelector: () => mockErrorMsgEl,
-                getAttribute: () => id
+                getAttribute: () => id,
+                classList: {
+                    remove: jest.fn()
+                }
             };
 
             const fvInst = formValidation(formEl, {});
@@ -152,7 +158,7 @@ describe('formValidation', () => {
     it('resets when invoked', () => {
         const fvInst = formValidation(formEl, {});
         fvInst.reset();
-        expect(emptyElements).toHaveBeenCalled();
+        expect(stateInst.reset).toHaveBeenCalled();
     });
 
     describe('onEvent', () => {
