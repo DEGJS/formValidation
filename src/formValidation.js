@@ -48,7 +48,7 @@ const formValidation = (formEl, options = {}) => {
 	}
 
 	const registerFields = fieldEls => {
-		ensureArray(fieldEls);
+		fieldEls = ensureArray(fieldEls);
 		fieldEls.forEach(fieldEl => {
 			const inputEls = Array.from(fieldEl.querySelectorAll(settings.inputsSelector));
 			const id = getUniqueId(fieldEl, settings);
