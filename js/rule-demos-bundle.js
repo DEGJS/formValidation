@@ -412,6 +412,7 @@ this['rule-demos-bundle'].js = (function () {
     };
 
     var registerFields = function registerFields(fieldEls) {
+      fieldEls = ensureArray(fieldEls);
       fieldEls.forEach(function (fieldEl) {
         var inputEls = Array.from(fieldEl.querySelectorAll(settings.inputsSelector));
         var id = getUniqueId(fieldEl, settings);
@@ -566,6 +567,7 @@ this['rule-demos-bundle'].js = (function () {
         var id = elOrId;
 
         if (isElement(elOrId)) {
+          elOrId.classList.remove(settings.hasErrorsClass);
           var elErrorWrapper = elOrId.querySelector('.' + settings.errorsClass);
 
           if (elErrorWrapper) {
