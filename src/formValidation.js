@@ -190,6 +190,7 @@ const formValidation = (formEl, options = {}) => {
 		elOrIdArr.forEach(elOrId => {
 			let id = elOrId;
 			if (isElement(elOrId)) {
+				elOrId.classList.remove(hasErrorsClass);
 				const elErrorWrapper = elOrId.querySelector('.' + settings.errorsClass);
 				if (elErrorWrapper) {
 					emptyElements(elErrorWrapper);
