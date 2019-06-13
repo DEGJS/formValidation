@@ -84,7 +84,7 @@ this['example-form-bundle'].js = (function () {
 
   var state = function state() {
     var defaultState = [];
-    var state = defaultState.concat();
+    var state = [].concat(defaultState);
 
     var get = function get() {
       return state;
@@ -123,7 +123,7 @@ this['example-form-bundle'].js = (function () {
     };
 
     var reset = function reset() {
-      state = defaultState.concat();
+      state = [].concat(defaultState);
     };
 
     return {
@@ -373,8 +373,6 @@ this['example-form-bundle'].js = (function () {
       return message && message.length > 0;
     });
   };
-
-  // DEGJS modules
 
   var formValidation = function formValidation(formEl) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -857,19 +855,25 @@ this['example-form-bundle'].js = (function () {
     };
   };
 
-  var exampleFormDemo = function exampleFormDemo() {
-    var fvOpts = {
-      rules: [required({
-        message: "REQUIRED"
-      }), email, pattern, minMaxLength]
-    };
-    var formEl = document.querySelector('.js-example-form');
+  const exampleFormDemo = function() {
+      const fvOpts = {
+          rules: [
+              required({
+                  message: "REQUIRED"
+              }),
+              email,
+              pattern,
+              minMaxLength
+          ]
+      };
 
-    if (formEl) {
-      formValidation(formEl, fvOpts);
-    } else {
-      console.error('Could not find formEl in document.');
-    }
+      const formEl = document.querySelector('.js-example-form');
+      if (formEl) {
+          formValidation(formEl, fvOpts);
+      } else {
+          console.error('Could not find formEl in document.');
+      }
+      
   };
 
   var exampleForm = exampleFormDemo();

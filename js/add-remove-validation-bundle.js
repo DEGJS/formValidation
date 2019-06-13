@@ -50,7 +50,7 @@ this['add-remove-validation-bundle'].js = (function () {
 
   var state = function state() {
     var defaultState = [];
-    var state = defaultState.concat();
+    var state = [].concat(defaultState);
 
     var get = function get() {
       return state;
@@ -89,7 +89,7 @@ this['add-remove-validation-bundle'].js = (function () {
     };
 
     var reset = function reset() {
-      state = defaultState.concat();
+      state = [].concat(defaultState);
     };
 
     return {
@@ -339,8 +339,6 @@ this['add-remove-validation-bundle'].js = (function () {
       return message && message.length > 0;
     });
   };
-
-  // DEGJS modules
 
   var formValidation = function formValidation(formEl) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -932,27 +930,32 @@ this['add-remove-validation-bundle'].js = (function () {
     };
   };
 
-  var addRemoveValidation = function addRemoveValidation() {
-    var formEl = document.querySelector('.js-example-form-1');
-    var fieldsetEl = formEl.querySelector('.js-example-fieldset');
-    var formValidationInst = formValidation(formEl, {
-      rules: [email, required({
-        events: ['submit']
-      })]
-    });
-    formFieldAppender(fieldsetEl, {
-      firstItemIsRemovable: false,
-      onItemAddCallback: addValidation,
-      onItemRemoveCallback: removeValidation
-    });
+  const addRemoveValidation = function() {
+      const formEl = document.querySelector('.js-example-form-1');
+      const fieldsetEl = formEl.querySelector('.js-example-fieldset');
 
-    function addValidation(newFieldWrapper) {
-      formValidationInst.addFields([newFieldWrapper]);
-    }
+      const formValidationInst = formValidation(formEl, {
+          rules: [
+              email,
+              required({
+                  events: ['submit']
+              })
+          ]
+      });
+      
+      formFieldAppender(fieldsetEl, {
+          firstItemIsRemovable: false,
+          onItemAddCallback: addValidation,
+          onItemRemoveCallback: removeValidation
+      });
 
-    function removeValidation(removedFieldWrapper) {
-      formValidationInst.removeFields([removedFieldWrapper]);
-    }
+      function addValidation(newFieldWrapper) {
+          formValidationInst.addFields([newFieldWrapper]);
+      }
+
+      function removeValidation(removedFieldWrapper) {
+          formValidationInst.removeFields([removedFieldWrapper]);
+      }
   };
 
   var addRemoveValidation$1 = addRemoveValidation();

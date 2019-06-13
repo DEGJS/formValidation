@@ -50,7 +50,7 @@ this['cascading-errors-bundle'].js = (function () {
 
   var state = function state() {
     var defaultState = [];
-    var state = defaultState.concat();
+    var state = [].concat(defaultState);
 
     var get = function get() {
       return state;
@@ -89,7 +89,7 @@ this['cascading-errors-bundle'].js = (function () {
     };
 
     var reset = function reset() {
-      state = defaultState.concat();
+      state = [].concat(defaultState);
     };
 
     return {
@@ -339,8 +339,6 @@ this['cascading-errors-bundle'].js = (function () {
       return message && message.length > 0;
     });
   };
-
-  // DEGJS modules
 
   var formValidation = function formValidation(formEl) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -633,43 +631,47 @@ this['cascading-errors-bundle'].js = (function () {
     };
   };
 
-  var individualRuleExample = function individualRuleExample(formValidation, opts) {
-    var validationOpts = {
-      defaultErrorMessage: opts.defaultErrorMessage,
-      rules: opts.rules
-    };
-    var formEl = document.querySelector(opts.formSelector);
-    var validationInst = formValidation(formEl, validationOpts);
+  const individualRuleExample = function(formValidation, opts) {
+      const validationOpts = {
+          defaultErrorMessage: opts.defaultErrorMessage,
+          rules: opts.rules
+      };
+
+      const formEl = document.querySelector(opts.formSelector);
+      const validationInst = formValidation(formEl, validationOpts);
   };
 
-  var cascadingErrors = function cascadingErrors() {
-    individualRuleExample(formValidation, {
-      rules: [required({
-        events: ['submit']
-      })],
-      formSelector: '.js-example-form-1'
-    });
-    individualRuleExample(formValidation, {
-      rules: [required({
-        events: ['submit']
-      })],
-      formSelector: '.js-example-form-2'
-    });
-    individualRuleExample(formValidation, {
-      rules: [required({
-        message: "I'm an error message on the rule.",
-        events: ['submit']
-      })],
-      formSelector: '.js-example-form-3'
-    });
-    individualRuleExample(formValidation, {
-      defaultErrorMessage: "I'm an error defined in formValidation settings.",
-      rules: [required({
-        message: '',
-        events: ['submit']
-      })],
-      formSelector: '.js-example-form-4'
-    });
+  const cascadingErrors = function() {
+      individualRuleExample(formValidation, {
+          rules: [required({
+              events: ['submit']
+          })],
+          formSelector: '.js-example-form-1'
+      });
+
+      individualRuleExample(formValidation, {
+          rules: [required({
+              events: ['submit']
+          })],
+          formSelector: '.js-example-form-2'
+      });
+
+      individualRuleExample(formValidation, {
+          rules: [required({
+              message: "I'm an error message on the rule.",
+              events: ['submit']
+          })],
+          formSelector: '.js-example-form-3'
+      });
+
+      individualRuleExample(formValidation, {
+          defaultErrorMessage: "I'm an error defined in formValidation settings.",
+          rules: [required({
+              message: '',
+              events: ['submit']
+          })],
+          formSelector: '.js-example-form-4'
+      });
   };
 
   var cascadingErrors$1 = cascadingErrors();

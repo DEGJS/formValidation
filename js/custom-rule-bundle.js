@@ -50,7 +50,7 @@ this['custom-rule-bundle'].js = (function () {
 
   var state = function state() {
     var defaultState = [];
-    var state = defaultState.concat();
+    var state = [].concat(defaultState);
 
     var get = function get() {
       return state;
@@ -89,7 +89,7 @@ this['custom-rule-bundle'].js = (function () {
     };
 
     var reset = function reset() {
-      state = defaultState.concat();
+      state = [].concat(defaultState);
     };
 
     return {
@@ -339,8 +339,6 @@ this['custom-rule-bundle'].js = (function () {
       return message && message.length > 0;
     });
   };
-
-  // DEGJS modules
 
   var formValidation = function formValidation(formEl) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -634,78 +632,78 @@ this['custom-rule-bundle'].js = (function () {
   };
 
   // Config
-  var cityCheck = function cityCheck() {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var defaults = {
-      message: 'That is not the best city in the world.',
-      messageAttr: 'data-validation-city-message',
-      events: ['focusout', 'submit']
-    };
-    var settings = Object.assign({}, defaults, options);
+  const cityCheck = function(options = {}) {
 
-    function getSettings() {
-      return settings;
-    }
+  	const defaults = {
+          message: 'That is not the best city in the world.',
+          messageAttr: 'data-validation-city-message',
+  		events: [
+  			'focusout',
+  			'submit'
+  		]
+  	};
+  	const settings = Object.assign({}, defaults, options);
 
-    function isRelevant(field) {
-      return field.inputEls.some(function (inputEl) {
-        return inputEl.getAttribute('data-validation-city-check') !== null;
-      });
-    }
+  	function getSettings() {
+  		return settings;
+  	}
 
-    function checkCity(cityName) {
-      return new Promise(function (resolve, reject) {
-        if (cityName.length === 0) {
-          resolve();
-        } else {
-          return setTimeout(function () {
-            resolve(cityName === 'St. Louis');
-          }, 500);
-        }
-      });
-    }
+  	function isRelevant(field) {
+  		return field.inputEls.some(inputEl => inputEl.getAttribute('data-validation-city-check') !== null);
+      }
+      
+      function checkCity(cityName) {
+          return new Promise((resolve, reject) => {
+              if (cityName.length === 0 ) {
+                  resolve();
+              } else {
+                  return setTimeout(() => {
+                      resolve(cityName === 'St. Louis');
+                  }, 500);
+              }
+  		});
+      }
 
-    function validate(field) {
-      return new Promise(function (resolve, reject) {
-        if (field.inputEls) {
-          var promises = field.inputEls.map(function (el) {
-            return checkCity(el.value);
-          });
-          Promise.all(promises).then(function (responses) {
-            console.log(responses.every(function (resp) {
-              return resp;
-            }));
-            resolve({
-              valid: responses.every(function (resp) {
-                return resp;
-              })
-            });
-          }).catch(function (e) {
-            resolve({
-              valid: false
-            });
-          });
-        } else {
-          reject('cityCheck: No inputs set.');
-        }
-      });
-    }
+  	function validate(field) {
+  		return new Promise((resolve, reject) => {
+              if (field.inputEls) {
+                  const promises = field.inputEls.map(el => checkCity(el.value));
+                  Promise.all(promises).then(responses => {
+                      console.log(responses.every(resp => resp));
+                      resolve({
+                          valid: responses.every(resp => resp)
+                      });
+                  }).catch(e => {
+                      resolve({
+                          valid: false
+                      });
+                  });
+              } else {
+                  reject('cityCheck: No inputs set.');
+              }
+  		});
+  	}
 
-    return {
-      settings: getSettings(),
-      isRelevant: isRelevant,
-      validate: validate
-    };
+  	return {
+  		settings: getSettings(),
+  		isRelevant: isRelevant,
+  		validate: validate
+  	}
+
   };
 
-  var customRule = function customRule() {
-    var formValidationOpts = {
-      rules: [required, cityCheck({
-        message: 'That is not the greatest city in the world. Think "Gateway to the West"'
-      })]
-    };
-    var formEl = document.querySelector('.js-custom-rule-form');
-    formValidation(formEl, formValidationOpts);
+  const customRule = function() {
+      const formValidationOpts = {
+          rules: [
+              required,
+              cityCheck({
+                  message: 'That is not the greatest city in the world. Think "Gateway to the West"'
+              })
+          ]
+      };
+
+      const formEl = document.querySelector('.js-custom-rule-form');
+      formValidation(formEl, formValidationOpts);
   };
 
   var customRule$1 = customRule();
