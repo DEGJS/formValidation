@@ -24,9 +24,26 @@ const bundle = async function(entryName) {
     const inputOpts = {
         input: `demo/src/js/components/${entryName}.js`,
         plugins: [
+            babel({
+                babelrc: false,
+                include: [
+                    'src/**',
+                    'node_modules/@degjs/**'
+                ],
+                presets: [
+                    [
+                        '@babel/preset-env',
+                        {
+                            modules: false,
+                            useBuiltIns: 'usage',
+                            corejs: 2,
+                            targets: '> 1%, ie 11'
+                        }
+                    ]
+                ]
+            }),
             resolve(),
-            commonJs(),
-            babel()
+            commonJs()            
         ]
     };
     const outputOpts = {
