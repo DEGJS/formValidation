@@ -54,7 +54,7 @@ import pattern from "@degjs/form-validation-pattern";
 import required from "@degjs/form-validation-required";
 
 /* Configure the rules array alongside other validation options. Default rule settings can be overridden at the rule level during instantiation by calling the rule as a function and passing it an options array. */
-let validationOptions = {
+const validationOptions = {
     rules: [
         pattern,
         required({
@@ -64,8 +64,8 @@ let validationOptions = {
 };
 
 /* Instantiate the formValidation module on an element */
-let formElement = document.querySelector('.form');
-let validationInst = formValidation(formElement, validationOptions);
+const formElement = document.querySelector('.form');
+const validationInst = formValidation(formElement, validationOptions);
 ```
 
 Sample Markup:
