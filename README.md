@@ -9,6 +9,7 @@ A modular, promise-based form validation plugin, free of third-party dependencie
 * [Usage](#usage)
 * [Options](#options)
 * [Methods](#methods)
+* [Common Use Case Examples](#common-use-case-examples)
 * [Configuring Error Messages](#configuring-error-messages)
 * [Rules](#rules)
 * [Writing Your Own Rule](#writing-your-own-rule)
