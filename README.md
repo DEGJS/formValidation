@@ -195,6 +195,34 @@ An element or array of elements to remove from the validation instance.
 Parameters: `none`  
 Removes all registered fields from the validation instance.
 
+## Common Use Case Examples
+### Dynamically adding/removing fields from validation
+```js
+import formValidation from "@degjs/form-validation";
+
+const validationInst = formValidation();
+const toggleElement = document.querySelector('.js-toggle');
+// By giving the dependent fields their own class, and not using the default class, the field will not be automatically added to the validation instance on page load.
+const dependentFields = [...document.querySelector('.js-dependent-field')];
+
+toggleElement.addEventListener('change', e => {
+  if (e.target.checked) {
+    validationInst.addFields(dependentFields);
+  } else {
+    validationInst.removeFields(dependentFields);
+});
+
+```
+```html
+<form>
+	<input class="js-toggle" type="checkbox">
+	<div class="js-dependent-field">
+		<input required />
+	</div>
+</form>
+```
+
+
 ## Configuring Error Messages
 When an error occurs, formValidation follows a hierarchy to determine which error message to show. This allows fine-grained control over messaging on a field-by-field basis. Error messages will be chosen in the following order of importance:
 
