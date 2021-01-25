@@ -203,8 +203,9 @@ import formValidation from "@degjs/form-validation";
 
 const validationInst = formValidation();
 const toggleElement = document.querySelector('.js-toggle');
-// By giving the dependent fields their own class, and not using the default class, the field will not be automatically added to the validation instance on page load.
-const dependentFields = [...document.querySelector('.js-dependent-field')];
+// By giving the dependent fields their own class, and not using the default class, 
+// the field will not be automatically added to the validation instance on page load.
+const dependentFields = [...document.querySelectorAll('.js-dependent-field')];
 
 toggleElement.addEventListener('change', e => {
   if (e.target.checked) {
@@ -216,10 +217,10 @@ toggleElement.addEventListener('change', e => {
 ```
 ```html
 <form>
-	<input class="js-toggle" type="checkbox">
-	<div class="js-dependent-field">
-		<input required />
-	</div>
+  <input class="js-toggle" type="checkbox">
+  <div class="js-dependent-field">
+    <input required />
+  </div>
 </form>
 ```
 
