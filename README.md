@@ -199,7 +199,8 @@ Removes all registered fields from the validation instance.
 
 ## Helpful Hints
 * If FormValidation is being used on your form, **never try to write other validation functionality in tandem with it**. FormValidation disables HTML5 form validation and swallows several form- and field-related events. Trying to write separate validation will cause unexpected side effects and make debugging very difficult. A better approach is to write a custom FormValidation rule to handle your additional validation. You can also leverage FormValidation's built-in events (`on[Form/Field]ValidationStart`, `on[Form/Field]ValidationSuccess`, and `on[Form/Field]ValidationError`) to write custom behavior during the form's validation lifecycle.
-* When writing custom rules, **avoid adding side effects to your rule whenever possible**. An example of a side effect would be querying or mutating the DOM within the rule's `.isRelevant()` or `.validate()` methods. Doing so makes the rule less reusable and can introduce validation behavior that's difficult to troubleshoot. Instead, place your custom logic within FormValidation's built-in event callbacks. 
+* When writing custom rules, **avoid adding side effects to your rule whenever possible**. An example of a side effect would be querying or mutating the DOM within the rule's `.isRelevant()` or `.validate()` methods. Doing so makes the rule less reusable and can introduce validation behavior that's difficult to troubleshoot. Instead, place your custom logic within FormValidation's built-in event callbacks.
+* When writing a custom rule or configuring an existing rule's events, use `focusout` (not `blur`) as your "input no longer focused" event (the `blur` event doesn't bubble up and won't always work as expected).
 
 ## Common Use Case Examples
 ### Dynamically adding/removing fields from validation
