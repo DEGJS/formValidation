@@ -7,9 +7,9 @@ A modular, promise-based form validation plugin, free of third-party dependencie
 * [Installation](#installation)
 * [Dependencies](#dependencies)
 * [Usage](#usage)
-* [Helpful Hints](#helpful-hints)
 * [Options](#options)
 * [Methods](#methods)
+* [Helpful Hints](#helpful-hints)
 * [Common Use Case Examples](#common-use-case-examples)
 * [Configuring Error Messages](#configuring-error-messages)
 * [Rules](#rules)
@@ -84,9 +84,6 @@ Sample Markup:
     </fieldset>
 </form>
 ```
-## Helpful Hints
-* If FormValidation is being used on your form, **never try to write other validation functionality in tandem with it**. FormValidation disables HTML5 form validation and swallows several form- and field-related events. Trying to write separate validation will cause unexpected side effects and make debugging very difficult. A better approach is to write a custom FormValidation rule to handle your additional validation. You can also leverage FormValidation's built-in events (`on[Form/Field]ValidationStart`, `on[Form/Field]ValidationSuccess`, and `on[Form/Field]ValidationError`) to write custom behavior during the form's validation lifecycle.
-* When writing custom rules, **avoid adding side effects to your rule whenever possible**. An example of a side effect would be querying or mutating the DOM within the rule's `.isRelevant()` or `.validate()` methods. Doing so makes the rule less reusable and can introduce validation behavior that's difficult to troubleshoot. Instead, place your custom logic within FormValidation's built-in event callbacks. 
 
 ## Options
 
@@ -199,6 +196,10 @@ An element or array of elements to remove from the validation instance.
 ### .reset()
 Parameters: `none`  
 Removes all registered fields from the validation instance.
+
+## Helpful Hints
+* If FormValidation is being used on your form, **never try to write other validation functionality in tandem with it**. FormValidation disables HTML5 form validation and swallows several form- and field-related events. Trying to write separate validation will cause unexpected side effects and make debugging very difficult. A better approach is to write a custom FormValidation rule to handle your additional validation. You can also leverage FormValidation's built-in events (`on[Form/Field]ValidationStart`, `on[Form/Field]ValidationSuccess`, and `on[Form/Field]ValidationError`) to write custom behavior during the form's validation lifecycle.
+* When writing custom rules, **avoid adding side effects to your rule whenever possible**. An example of a side effect would be querying or mutating the DOM within the rule's `.isRelevant()` or `.validate()` methods. Doing so makes the rule less reusable and can introduce validation behavior that's difficult to troubleshoot. Instead, place your custom logic within FormValidation's built-in event callbacks. 
 
 ## Common Use Case Examples
 ### Dynamically adding/removing fields from validation
