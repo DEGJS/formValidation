@@ -1,4 +1,4 @@
-# formValidation
+# FormValidation
 ![Run Tests](https://github.com/DEGJS/formValidation/workflows/Run%20Tests/badge.svg)
 
 A modular, promise-based form validation plugin, free of third-party dependencies and built on top of native HTML5 validation.
